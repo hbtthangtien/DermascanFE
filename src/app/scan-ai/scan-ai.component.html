@@ -1,0 +1,108 @@
+<section
+  class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] flex items-center justify-center p-4 overflow-auto">
+  <!-- STEP 1 – guide -->
+  <div *ngIf="step === 1" class="bg-white w-full max-w-xl rounded-[2rem] p-10 shadow-lg text-center">
+    <div class="flex items-start gap-3 mb-6">
+      <svg style="height: 59px;width: 59px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-gray-600">
+        <circle cx="11" cy="11" r="8" />
+        <path d="M21 21l-4.35-4.35" /></svg>
+      <h2 class="text-2xl font-semibold">Trước khi bạn bắt đầu – hãy tìm hiểu cách tạo hoặc tải một bức ảnh phù hợp</h2>
+    </div>
+    <ul class="list-disc list-inside text-left text-sm space-y-2">
+      <li>Chụp gần mặt, ánh sáng đều, tránh bóng tối mạnh.</li>
+      <li>Ảnh rõ nét ≥ 1024×768.</li>
+      <li>Giữ camera song song bề mặt da; lấy nét chính xác.</li>
+      <li>Nền & trang phục đơn giản.</li>
+    </ul>
+    <button (click)="next()"
+      class="mt-8 rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow">Tiếp
+      tục</button>
+  </div>
+
+  <!-- STEP 2 – choose source -->
+  <div *ngIf="step === 2" class="bg-white w-full max-w-xl rounded-[2rem] p-10 shadow-lg text-center space-y-8">
+    <div class="grid grid-cols-2 gap-8 items-center justify-center">
+      <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goCamera()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-14 h-14 text-gray-700 group-hover:text-emerald-600 transition">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 7.5h2.1a1.5 1.5 0 001.34-.83l.68-1.34A1.5 1.5 0 017.55 4.5h8.9a1.5 1.5 0 011.33.83l.68 1.34a1.5 1.5 0 001.34.83h2.1A1.5 1.5 0 0123 9v9.75A2.25 2.25 0 0120.75 21h-17.5A2.25 2.25 0 011 18.75V9a1.5 1.5 0 011.25-1.5z" />
+          <circle cx="12" cy="13" r="3.75" /></svg>
+        <span class="font-medium text-sm">Chụp ảnh</span>
+      </div>
+      <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goUpload()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-14 h-14 text-gray-700 group-hover:text-emerald-600 transition">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 10.5L12 6m0 0l-4.5 4.5M12 6v9" />
+        </svg>
+        <span class="font-medium text-sm">Tải ảnh</span>
+      </div>
+    </div>
+    <!-- input để chụp ảnh -->
+    <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" hidden>
+
+    <!-- input để chọn ảnh từ thư viện -->
+    <input #uploadInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+
+    <button (click)="back()"
+      class="rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow">Quay lại</button>
+  </div>
+
+  <!-- STEP 3 – capture -->
+  <div *ngIf="step === 3" class="flex flex-col items-center justify-center space-y-8">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2"
+      class="w-48 h-48">
+      <rect x="4" y="4" width="56" height="56" rx="12" fill="white" stroke="white" />
+      <path d="M32 18c-8 0-14 6-14 14 0 6 6 14 14 14s14-8 14-14c0-8-6-14-14-14z" stroke="#4b5563" />
+      <circle cx="24" cy="28" r="2" fill="#4b5563" />
+      <circle cx="40" cy="28" r="2" fill="#4b5563" />
+      <path d="M22 36c2.667 2 5.333 2 8 0" stroke="#4b5563" stroke-linecap="round" /></svg>
+    <button (click)="capturePhoto()"
+      class="flex items-center justify-center w-11 h-11 rounded-full bg-black/80 text-white hover:bg-black/60">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path d="M12 5.25a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5z" /></svg>
+    </button>
+  </div>
+
+  <!-- STEP 4 – loading -->
+  <div *ngIf="step === 4" class="flex flex-col items-center justify-center space-y-8 text-white">
+    <div class="w-72 h-72 rounded-[3rem] bg-cover bg-center flex items-center justify-center animate-pulse mt-4"
+      [ngStyle]="{ 'background-image': selectedImageUrl ? 'url(' + selectedImageUrl + ')' : 'none' }">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-12 h-12 animate-spin">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 3v3m0 12v3m7.071-15.071l-2.121 2.121M6.343 17.657l-2.121 2.121M21 12h-3M6 12H3m15.071 4.243l-2.121-2.121M6.343 6.343L4.222 4.222" />
+      </svg>
+    </div>
+    <p class="font-medium">Đang xử lý, xin đợi một lát!</p>
+  </div>
+
+  <!-- STEP 5 – result & analysis -->
+  <div *ngIf="step === 5" class="w-full">
+    <div
+      class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] p-6 rounded-t-2xl flex justify-between items-start text-white font-semibold">
+      <h3>Kết quả</h3>
+      <h3>Phân tích</h3>
+    </div>
+    <div
+      class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] p-6 flex flex-col md:flex-row gap-6 items-start justify-center">
+      <img [src]="resultImage" alt="Result" class="w-72 rounded" />
+      <img [src]="chartImage" alt="Chart" class="w-72 rounded bg-white" />
+      <button (click)="showAdvice()"
+        class="self-center md:self-start md:ml-auto mt-4 md:mt-0 rounded-full px-6 py-2 bg-emerald-100 text-emerald-700 font-medium hover:bg-emerald-200">Thoát</button>
+    </div>
+  </div>
+
+  <!-- STEP 6 – advice -->
+  <div *ngIf="step === 6" class="w-full max-w-4xl flex flex-col items-center">
+    <div class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] w-full p-8 flex flex-col items-center">
+      <div
+        class="bg-white rounded-[2rem] w-full max-w-xl min-h-[250px] p-8 text-center text-lg font-medium whitespace-pre-line">
+        {{ adviceText }}</div>
+      <button (click)="exit()"
+        class="mt-8 rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow">Thoát</button>
+    </div>
+  </div>
+</section>

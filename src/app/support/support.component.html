@@ -1,0 +1,9 @@
+<section class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-emerald-500 via-green-400 to-sky-500 flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-md rounded-[2rem] p-8 shadow-lg space-y-6">
+    <a routerLink="/" class="text-2xl text-emerald-800 hover:text-emerald-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></a>
+    <h1 class="text-3xl font-semibold">Liên hệ và hỗ trợ</h1>
+    <input type="text" [(ngModel)]="issue" placeholder="Nhập vấn đề bạn gặp phải" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+    <button (click)="send()" class="rounded-full w-24 h-9 bg-emerald-500 hover:bg-emerald-600 text-white font-medium">Gửi</button>
+    <input type="text" [(ngModel)]="search" placeholder="Tìm kiếm vấn đề gặp phải" (keyup.enter)="doSearch()" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+  </div>
+</section>

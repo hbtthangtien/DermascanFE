@@ -8,11 +8,11 @@
 
     <!-- Desktop links -->
     <ul class="hidden md:flex gap-6 font-medium">
-      <li><a routerLink="/" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Trang chủ</a></li>
-      <li><a routerLink="/scan" class="hover:text-yellow-300">Quét AI</a></li>
-      <li><a routerLink="/history" class="hover:text-yellow-300">Lịch sử <span class="ml-0.5">👑</span></a></li>
-      <li><a routerLink="/doctor" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
-      <li><a routerLink="/support" class="hover:text-yellow-300">Liên hệ hỗ trợ</a></li>
+      <li><a routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Trang chủ</a></li>
+      <li><a routerLink="/scan" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Quét AI</a></li>
+      <li><a routerLink="/history" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Lịch sử <span class="ml-0.5">👑</span></a></li>
+      <li><a routerLink="/doctor" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
+      <li><a routerLink="/support" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Liên hệ hỗ trợ</a></li>
     </ul>
 
     <!-- Auth buttons -->
