@@ -1,0 +1,51 @@
+<section class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-b from-[#6AC47E] to-[#4A90E2] flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-lg rounded-[3rem] md:rounded-[3.5rem] p-10 shadow-xl relative">
+    <!-- back arrow -->
+    <a routerLink="/home" class="absolute -left-10 top-10 md:top-12 text-2xl text-emerald-800 hover:text-emerald-600" title="Quay lại">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+    </a>
+
+    <h1 class="text-3xl font-semibold mb-8 text-center">Đăng nhập</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Username -->
+      <div>
+        <label for="username" class="block font-medium mb-1">Tên tài khoản/Email</label>
+        <input id="username" type="text" formControlName="username" placeholder="you@example.com" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+      </div>
+
+      <!-- Password with inline error icon -->
+      <div>
+        <label for="password" class="block font-medium mb-1">Mật khẩu</label>
+        <div class="relative">
+          <input id="password" type="password" formControlName="password" placeholder="••••••••" class="w-full rounded-full h-11 px-4 pr-11 bg-gray-200 focus:outline-none focus:ring-2" [ngClass]="{
+            'focus:ring-emerald-500': !loginForm.get('password')?.hasError('incorrect'),
+            'ring-2 ring-red-500': loginForm.get('password')?.hasError('incorrect')
+          }" />
+
+          <!-- red cross icon -->
+          <svg *ngIf="loginForm.get('password')?.hasError('incorrect')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500">
+            <path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zm3.53 13.47a.75.75 0 01-1.06 0L12 13.06l-2.47 2.47a.75.75 0 01-1.06-1.06L10.94 12 8.47 9.53a.75.75 0 011.06-1.06L12 10.94l2.47-2.47a.75.75 0 111.06 1.06L13.06 12l2.47 2.47c.29.29.29.77 0 1.06z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <!-- inline error text -->
+        <p *ngIf="loginForm.get('password')?.hasError('incorrect')" class="text-red-600 text-sm mt-1">Sai mật khẩu, xin hãy nhập lại</p>
+      </div>
+
+      <!-- Remember & forgot -->
+      <div class="flex items-center justify-between text-sm text-gray-600">
+        <label class="flex items-center gap-2 select-none">
+          <input type="checkbox" formControlName="remember" class="accent-emerald-600" />
+          Ghi nhớ mật khẩu
+        </label>
+        <a routerLink="/forgot" class="hover:underline">Quên mật khẩu hiện tại</a>
+      </div>
+
+      <button type="submit" class="w-full rounded-full h-11 bg-gradient-to-r from-emerald-400 via-emerald-500 to-lime-400 text-white font-semibold hover:brightness-110 transition">Đăng nhập</button>
+    </form>
+
+    <p class="text-center mt-6 text-sm text-gray-700">Chưa có tài khoản. <a routerLink="/register" class="font-semibold hover:underline">Đăng ký</a></p>
+  </div>
+</section>

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -11,23 +12,32 @@ export class HomeComponent {
 reasons = [
     {
       title: 'Nhanh nhẹn',
-      desc: 'Kết quả trả về gần như tức thời, giúp bạn tiết kiệm thời gian đến spa/clinic.',
-      icon: 'M12 4.5v15m7.5-7.5h-15' // plus icon for example
+      desc: `Hệ thống AI của dự án hoạt động với tốc độ cao,
+       giúp phân tích làn da và phát hiện mụn chỉ trong vài phút,
+       người dùng có thể nhận diện và phân loại tình trạng da ngay lập tức. 
+       Điều này giúp tiết kiệm thời gian và nâng cao hiệu quả trong việc chăm sóc da hằng ngày.`,
+      icon: 'assets/images/timerIcon.webp' // plus icon for example
     },
     {
       title: 'Thông minh',
-      desc: 'Mô hình học sâu được huấn luyện trên 50k+ ảnh da, độ chính xác > 92%.',
-      icon: 'M12 2a10 10 0 100 20 10 10 0 000-20z' // circle icon placeholder
+      desc: `Công nghệ trí tuệ nhân tạo (AI) được áp dụng để phân tích hình ảnh da một cách chính xác.
+             Hệ thống sử dụng mô hình học sâu (Deep Learning) để nhận diện các loại mụn và đánh giá mức độ nghiêm trọng.
+             Nhờ đó, người dùng có thể nhận được kết quả có độ chính xác cao, hỗ trợ họ đưa ra quyết định điều trị phù hợp nhất.`,
+      icon: 'assets/images/ai-idea-4342841-3603768.webp' // circle icon placeholder
     },
     {
       title: 'Cá nhân hóa',
-      desc: 'Đưa phác đồ, sản phẩm & lộ trình phù hợp loại da & mức độ mụn của riêng bạn.',
-      icon: 'M4 6h16M4 12h16M4 18h16' // menu icon placeholder
+      desc: `Mỗi làn da đều có đặc điểm riêng, vì vậy hệ thống cung cấp các gợi ý điều trị cá nhân hóa dựa trên loại mụn và tình trạng da của từng người.
+       Người dùng có thể theo dõi tiến trình cải thiện da qua thời gian và nhận được khuyến nghị sản phẩm,
+        liệu trình chăm sóc phù hợp với nhu cầu cá nhân.`,
+      icon: 'assets/images/persionalized.png' // menu icon placeholder
     },
     {
       title: 'Tiện lợi',
-      desc: 'Phân tích ngay trên điện thoại; không cần thiết bị chuyên dụng.',
-      icon: 'M5 3v18l7-5 7 5V3' // bookmark icon placeholder
+      desc: `Với nền tảng web thân thiện, hệ thống có thể được sử dụng trên mọi thiết bị như điện thoại,
+       máy tính bảng và laptop mà không cần cài đặt phần mềm. Người dùng có thể kiểm tra làn da bất cứ lúc nào, dù đang ở nhà, văn phòng hay khi đi du lịch.
+       Sự tiện lợi này giúp việc chăm sóc da trở nên dễ dàng và chủ động hơn bao giờ hết.`,
+      icon: 'assets/images/responsiveIcon.png' // bookmark icon placeholder
     }
   ];
 }

@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [CommonModule,RouterModule],
+  standalone:true,
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-    navOpen = false;
+  private router = inject(Router)
+  onRegister() {
+    this.router.navigate(['/register']);
+  }
+  onLogin() {
+    this.router.navigate(['/login']);
+  }
+  navOpen = false;
 }

@@ -1,28 +1,36 @@
-<nav class="bg-emerald-600 text-white sticky top-0 z-50 shadow">
+<nav class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] text-white sticky top-0 z-50 shadow">
   <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
     <!-- Brand -->
     <a routerLink="/" class="flex items-center gap-2 font-semibold text-lg">
-      <img src="assets/logo.png" alt="DermaScan" class="h-6 w-6" />
+      <img src="assets/images/Logo.png" alt="DermaScan" class="h-6 w-6" />
       DermaScan – AI Skincare Analysis
     </a>
 
     <!-- Desktop links -->
     <ul class="hidden md:flex gap-6 font-medium">
-      <li><a routerLink="/" class="hover:text-amber-300">Trang chủ</a></li>
-      <li><a routerLink="/guide" class="hover:text-amber-300">Hướng dẫn</a></li>
-      <li><a routerLink="/about" class="hover:text-amber-300">Về dự án</a></li>
+      <li><a routerLink="/" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Trang chủ</a></li>
+      <li><a routerLink="/scan" class="hover:text-yellow-300">Quét AI</a></li>
+      <li><a routerLink="/history" class="hover:text-yellow-300">Lịch sử <span class="ml-0.5">👑</span></a></li>
+      <li><a routerLink="/doctor" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
+      <li><a routerLink="/support" class="hover:text-yellow-300">Liên hệ hỗ trợ</a></li>
     </ul>
 
     <!-- Auth buttons -->
     <div class="hidden md:flex gap-2">
-      <button class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng nhập</button>
-      <button class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng ký</button>
+      <button type="button" (click)="onLogin()"
+        class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng
+        nhập</button>
+      <button type="button" (click)="onRegister()"
+        class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng
+        ký</button>
     </div>
 
     <!-- Mobile hamburger -->
     <button class="md:hidden" (click)="navOpen = !navOpen">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="navOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          [attr.d]="navOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
       </svg>
     </button>
   </div>
@@ -30,11 +38,15 @@
   <!-- Mobile menu -->
   <ul *ngIf="navOpen" class="md:hidden bg-emerald-700/95 backdrop-blur px-6 pb-4 space-y-3">
     <li><a routerLink="/" (click)="navOpen=false" class="block py-2 border-b border-white/10">Trang chủ</a></li>
-    <li><a routerLink="/guide" (click)="navOpen=false" class="block py-2 border-b border-white/10">Hướng dẫn</a></li>
-    <li><a routerLink="/about" (click)="navOpen=false" class="block py-2 border-b border-white/10">Về dự án</a></li>
+    <li><a routerLink="/scan" (click)="navOpen=false" class="block py-2 border-b border-white/10">Quét AI</a></li>
+    <li><a routerLink="/history" (click)="navOpen=false" class="block py-2 border-b border-white/10">Lịch sử 👑</a></li>
+    <li><a routerLink="/doctor" (click)="navOpen=false" class="block py-2 border-b border-white/10">Tư vấn bác sĩ 👑</a>
+    </li>
+    <li><a routerLink="/support" (click)="navOpen=false" class="block py-2 border-b border-white/10">Liên hệ hỗ trợ</a>
+    </li >
     <li class="pt-3 flex gap-3">
-      <button class="flex-1 border border-white/70 rounded py-1 text-sm">Đăng nhập</button>
-      <button class="flex-1 bg-white text-emerald-700 rounded py-1 text-sm">Đăng ký</button>
+    <button class="flex-1 border border-white/70 rounded py-1 text-sm">Đăng nhập</button>
+    <button class="flex-1 bg-white text-emerald-700 rounded py-1 text-sm">Đăng ký</button>
     </li>
   </ul>
 </nav>
