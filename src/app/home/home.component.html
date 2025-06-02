@@ -1,0 +1,95 @@
+
+<section class="bg-gradient-to-br from-emerald-500 to-emerald-400 text-white py-16 text-center">
+  <div class="max-w-3xl mx-auto px-4">
+    <h1 class="text-3xl md:text-4xl font-bold mb-4">Chăm sóc da thông minh với AI</h1>
+    <p class="mb-8 text-lg md:text-xl">Phân tích da chính xác, đưa ra gợi ý dẫn đầu cá nhân hóa</p>
+    <a routerLink="/scan" class="inline-block bg-yellow-400 text-emerald-900 font-semibold px-6 py-3 rounded-lg shadow hover:bg-yellow-300 transition">Quét da ngay</a>
+  </div>
+</section>
+
+<!-- Giới thiệu -->
+<section class="py-16 bg-white text-gray-700">
+  <div class="max-w-5xl mx-auto px-4 space-y-6">
+    <h2 class="text-2xl font-semibold">Giới thiệu</h2>
+    <p>
+      Dự án này ứng dụng trí tuệ nhân tạo (AI) và xử lý hình ảnh để phát hiện và phân loại các loại mụn trên da mặt dưới mọi đường và ánh sáng. Hệ thống có thể phân biệt các loại mụn như mụn đầu đen, mụn viêm, mụn ẩn,… giúp người dùng hiểu rõ tình trạng da của mình ngay tức thì và hướng dẫn trị phù hợp.
+    </p>
+    <a routerLink="/about" class="text-emerald-600 font-medium hover:underline">Xem thêm →</a>
+  </div>
+</section>
+
+<!-- Tại sao dự án hoạt động tốt? -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-semibold mb-10 text-center">Tại sao dự án hoạt động tốt?</h2>
+    <div class="grid md:grid-cols-4 gap-8">
+      <ng-container *ngFor="let item of reasons">
+        <div class="flex flex-col items-center text-center">
+          <div class="bg-emerald-500/10 rounded-full p-4 mb-4">
+            <!-- Replace with icon library as needed -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-emerald-600">
+              <path [attr.d]="item.icon" />
+            </svg>
+          </div>
+          <h3 class="font-medium mb-2">{{ item.title }}</h3>
+          <p class="text-sm text-gray-600">{{ item.desc }}</p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>
+
+<!-- Cách sử dụng -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-2xl font-semibold mb-10 text-center">Cách sử dụng để đạt hiệu quả</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="space-y-3">
+        <h3 class="font-medium text-lg flex items-center gap-2">
+          <span class="inline-block w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+            <span class="text-xl font-bold text-emerald-600">1</span>
+          </span>
+          Chụp ảnh hoặc đưa ảnh đã có sẵn
+        </h3>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+          <li>Ánh sáng tự nhiên, tránh bóng đổ mạnh</li>
+          <li>Góc chụp chính diện và 2 bên má</li>
+          <li>Độ phân giải tối thiểu 1024×768</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="font-medium text-lg flex items-center gap-2">
+          <span class="inline-block w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+            <span class="text-xl font-bold text-emerald-600">2</span>
+          </span>
+          Xác định và gợi ý
+        </h3>
+        <p class="text-sm text-gray-600">Hệ thống AI nhận diện và phân loại tình trạng mụn của bạn, trả kết quả trong vài giây.</p>
+      </div>
+      <div class="space-y-3">
+        <h3 class="font-medium text-lg flex items-center gap-2">
+          <span class="inline-block w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+            <span class="text-xl font-bold text-emerald-600">3</span>
+          </span>
+          Nhận kết quả và kế hoạch chăm sóc
+        </h3>
+        <p class="text-sm text-gray-600">Bạn sẽ nhận phác đồ cá nhân hóa với sản phẩm và liệu trình dưỡng da phù hợp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Phân tích hình ảnh (placeholder) -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-6">
+      <h2 class="text-2xl font-semibold">Cách hệ thống phân tích ảnh?</h2>
+      <p class="text-gray-600">AI kết hợp học sâu (deep learning) với mạng CNN được huấn luyện trên hàng chục nghìn ảnh da liễu gắn nhãn. Ảnh của bạn được tiền xử lý, phát hiện vùng da mặt, sau đó phân đoạn và phân loại từng pixel thành các loại mụn tương ứng.</p>
+      <p class="text-gray-600">Mô hình liên tục được cập nhật dữ liệu mới để cải thiện độ chính xác.</p>
+    </div>
+    <img src="assets/ai-scan-illustration.svg" alt="AI skin analysis" class="rounded-xl shadow-lg" />
+  </div>
+</section>
+
+<!-- Footer minimal -->
+<footer class="bg-emerald-600 text-white py-6 text-center text-sm">© 2025 DermaScan. All rights reserved.</footer>
