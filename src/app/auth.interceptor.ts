@@ -19,7 +19,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status == 401 && !req.url.includes('/auth/refresh-token')) {
         return authService.refreshToken().pipe(
           switchMap((res) => {
-            console.log(res);
             const newAccessToken = res.data.accessToken;
             localStorage.setItem('authToken', JSON.stringify(res.data));
             const newAuthReq = req.clone({

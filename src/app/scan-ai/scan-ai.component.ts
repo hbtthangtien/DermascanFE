@@ -25,6 +25,9 @@ export class ScanAIComponent {
   selectedFile: File | null | undefined;
   analysis?: ResponseAnalysis['skinAnalysis'];
   boundingBoxes: ResponseAnalysis['inferenceResult']['predictions'] = [];
+  videoStream?: MediaStream;
+  @ViewChild('video') videoRef?: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvas') canvasRef?: ElementRef<HTMLCanvasElement>;
   /** placeholders for demo */
   resultImage = 'assets/scan-demo-result.jpg';
   chartImage = 'assets/chart-placeholder.png';
@@ -62,10 +65,6 @@ export class ScanAIComponent {
     this.uploadInput.nativeElement.click();
   }
 
-  capturePhoto() {
-    this.cameraInput.nativeElement.click();
-  }
-
   private processImage() {
     if (!this.selectedFile) {
       this.notificateService.error('Vui lòng chọn ảnh.');
@@ -90,6 +89,46 @@ export class ScanAIComponent {
     });
   }
 
+  async openCamera(): Promise<void> {
+  this.step = 3;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: { ideal: 640 }, height: { ideal: 480 } }
+    });
+    this.videoStream = stream;
+    if (this.videoRef?.nativeElement) {
+      this.videoRef.nativeElement.srcObject = stream;
+      await this.videoRef.nativeElement.play();
+    }
+  } catch (err) {
+    console.error(err);
+    this.notificateService.error('Không thể truy cập camera.');
+    this.step = 2;
+  }
+}
+
+  stopCamera() {
+    this.videoStream?.getTracks().forEach(t => t.stop());
+    this.videoStream = undefined;
+  }
+
+  capturePhoto() {
+    if (!this.videoRef?.nativeElement || !this.canvasRef?.nativeElement) return;
+    const video = this.videoRef.nativeElement;
+    const canvas = this.canvasRef.nativeElement;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      this.selectedFile = new File([blob], `capture_${Date.now()}.jpg`, { type: 'image/jpeg' });
+      this.selectedImageUrl = canvas.toDataURL('image/jpeg');
+      this.stopCamera();
+      this.processImage();
+    }, 'image/jpeg', 0.92);
+  }
   showAdvice() {
     this.step = 6;
   }

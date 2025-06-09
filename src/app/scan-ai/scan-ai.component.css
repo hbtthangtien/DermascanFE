@@ -3,3 +3,8 @@
   border: 2px solid #10b981;
   pointer-events: none;
 }
+video {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 1rem;
+}
