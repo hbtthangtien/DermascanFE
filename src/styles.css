@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-dialog .mat-dialog-container {
+  border-radius: 12px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+}
+
+.custom-backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+.success-snackbar {
+  background-color: #4CAF50 !important; /* màu xanh lá */
+  color: white;
+}
+.error-snackbar {
+  background-color: #bc0e0e !important; /* màu xanh lá */
+  color: white;
+}
+::ng-deep .mat-dialog-container {
+  background: #fff !important;
+  color: #333 !important;
+}
+
+.success-snackbar.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #4CAF50 !important; /* Xanh success */
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+.error-snackbar.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #bc0e0e /* Đỏ lỗi */
+  --mdc-snackbar-supporting-text-color: white !important;
+}
+.custom-dialog .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}

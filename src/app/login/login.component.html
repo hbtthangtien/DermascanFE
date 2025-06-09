@@ -12,8 +12,8 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <!-- Username -->
       <div>
-        <label for="username" class="block font-medium mb-1">Tên tài khoản/Email</label>
-        <input id="username" type="text" formControlName="username" placeholder="you@example.com" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        <label for="email" class="block font-medium mb-1">Tên tài khoản/Email</label>
+        <input id="email" type="text" formControlName="email" placeholder="you@example.com" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
       </div>
 
       <!-- Password with inline error icon -->
@@ -31,7 +31,7 @@
           </svg>
         </div>
         <!-- inline error text -->
-        <p *ngIf="loginForm.get('password')?.hasError('incorrect')" class="text-red-600 text-sm mt-1">Sai mật khẩu, xin hãy nhập lại</p>
+        <p *ngIf="loginForm.get('password')?.hasError('incorrect')" class="text-red-600 text-sm mt-1">{{errorMessage}}</p>
       </div>
 
       <!-- Remember & forgot -->

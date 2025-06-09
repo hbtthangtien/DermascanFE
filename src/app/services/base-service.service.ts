@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseServiceService {
+export class BaseService {
   private baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
@@ -34,7 +34,10 @@ export class BaseServiceService {
     return this.http.put<T>(`${this.baseUrl}/${path}/${id}`, body);
   }
    // DELETE
-  delete<T>(path: string, id: number | string): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}/${path}/${id}`);
+  delete<T>(path: string, id: number | string, body?:any): Observable<T> {
+    if(body)
+      return this.http.delete<T>(`${this.baseUrl}/${path}/${id}`,{body});
+    else 
+      return this.http.delete<T>(`${this.baseUrl}/${path}/${id}`);
   }
 }

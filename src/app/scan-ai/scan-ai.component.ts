@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ScanAnalysisService } from '../services/scan-analysis.service';
 
 @Component({
   selector: 'app-scan-ai',
@@ -9,6 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './scan-ai.component.css'
 })
 export class ScanAIComponent {
+  private scanAnalysis = inject(ScanAnalysisService);
   /**
   * 1 = guide, 2 = source choose, 3 = capture, 4 = loading, 5 = result, 6 = advice
   */
@@ -16,6 +18,7 @@ export class ScanAIComponent {
   @ViewChild('cameraInput') cameraInput!: ElementRef<HTMLInputElement>;
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
   selectedImageUrl: string | ArrayBuffer | null = null;
+  selectedFile!: File
   /** placeholders for demo */
   resultImage = 'assets/scan-demo-result.jpg';
   chartImage = 'assets/chart-placeholder.png';
@@ -24,6 +27,7 @@ export class ScanAIComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const reader = new FileReader();
+      this.selectedFile = input.files[0];
       reader.onload = () => {
         this.selectedImageUrl = reader.result;
       };
@@ -31,25 +35,36 @@ export class ScanAIComponent {
       this.step = 4;
     }
   }
-  next() { this.step = 2; }
+  next() {
+    this.scanAnalysis.ValidatePlanUser().subscribe({
+      next: (resp) => {
+        this.step = 2;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
   back() { this.step = Math.max(1, this.step - 1); }
 
-  goCamera() { 
-    this.step = 3; 
+  goCamera() {
+    this.step = 3;
     this.cameraInput.nativeElement.click(); // mở camera
   }
   goUpload() {
-    
+
     this.uploadInput.nativeElement.click();
     //this.mockProcessing();
   }
 
   capturePhoto() {
     this.step = 4;
-    this.mockProcessing();
+    this.processImage();
   }
 
-  mockProcessing() {
+  processImage() {
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
     setTimeout(() => {
       this.step = 5; // show results
     }, 2500);

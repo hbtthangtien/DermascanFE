@@ -10,9 +10,9 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
       <div>
-        <label for="username" class="block font-medium mb-1">Tên tài khoản/Email</label>
-        <input id="username" type="email" formControlName="username" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-        <p *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-600 text-sm mt-1">Email không hợp lệ</p>
+        <label for="email" class="block font-medium mb-1">Tên tài khoản/Email</label>
+        <input id="email" type="email" formControlName="email" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        <p *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-600 text-sm mt-1">Email không hợp lệ</p>
       </div>
 
       <div>
@@ -32,7 +32,12 @@
         <input id="phone" type="tel" formControlName="phone" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         <p *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-red-600 text-sm mt-1">Số điện thoại không hợp lệ</p>
       </div>
-      <p class="text-center text-xs text-gray-600">Mật khẩu phải có số, chữ, viết hoa chữ cái đầu và ký tự đặc biệt</p>
+      <div>
+        <label for="fullname" class="block font-medium mb-1">Nhập Họ và Tên</label>
+        <input id="fullname" type="tel" formControlName="fullname" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        <p *ngIf="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched" class="text-red-600 text-sm mt-1">Tên không được bỏ trống</p>
+      </div>
+      <p class="text-center text-red-600 text-sm mt-1">{{errors}}</p>
       <button type="submit" class="w-full rounded-full h-11 bg-gradient-to-r from-emerald-400 via-emerald-500 to-lime-400 text-white font-semibold hover:brightness-110 transition">Đăng ký</button>
     </form>
     <p class="text-center mt-6 text-sm text-gray-700">Đã có tài khoản. <a routerLink="/login" class="font-semibold hover:underline">Đăng nhập</a></p>

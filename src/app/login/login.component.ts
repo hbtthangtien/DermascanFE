@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { BaseService } from '../services/base-service.service';
+import { LoginRequest } from '../models/Auth/login-request';
+import { NotificateService } from '../services/notificate.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,24 +15,33 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   loginForm:FormGroup;
+  errorMessage: string | undefined;
+  private notificateService = inject(NotificateService);
+  private authService = inject(AuthService);
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       remember: [false]
     });
 
   }
   onSubmit() {
-    if (this.loginForm.invalid) return;
-    console.log('🔐 SUBMIT', this.loginForm.value); 
-    if (this.loginForm.invalid) return;
-
     const pwCtrl = this.loginForm.get('password');
-    if (pwCtrl?.value !== 'correctPassword') {
-      pwCtrl?.setErrors({ incorrect: true });
-      return;
+    const body : LoginRequest = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
     }
-    // TODO: integrate authentication service
+    console.log(body);
+    this.authService.login(body).subscribe({
+        next: (resp) =>{
+            this.notificateService.success("Đăng nhập thành công",1000);
+        },
+        error: (err) => {
+          pwCtrl?.setErrors({ incorrect: true });
+          this.errorMessage = err.error.message;
+          this.notificateService.error("Đăng nhập lỗi");
+        }
+    });
   }
 }

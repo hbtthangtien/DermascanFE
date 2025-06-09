@@ -10,21 +10,32 @@
     <ul class="hidden md:flex gap-6 font-medium">
       <li><a routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Trang chủ</a></li>
       <li><a routerLink="/scan" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Quét AI</a></li>
-      <li><a routerLink="/history" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Lịch sử <span class="ml-0.5">👑</span></a></li>
-      <li><a routerLink="/doctor" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
+      <li *ngIf="user$ | async as UserClaim"><a routerLink="/history" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Lịch sử <span class="ml-0.5">👑</span></a></li>
+      <li *ngIf="user$ | async as UserClaim"><a routerLink="/doctor" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
       <li><a routerLink="/support" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Liên hệ hỗ trợ</a></li>
     </ul>
 
     <!-- Auth buttons -->
-    <div class="hidden md:flex gap-2">
+    <!-- <div class="hidden md:flex gap-2">
       <button type="button" (click)="onLogin()"
         class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng
         nhập</button>
       <button type="button" (click)="onRegister()"
         class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng
         ký</button>
-    </div>
+    </div> -->
+    <ng-container *ngIf="user$ | async as UserClaim; else guest">
+      <div class="hidden md:flex items-center gap-2 cursor-pointer" (click)="dropdownOpen=!dropdownOpen">
+        <img [src]="(user$ | async)?.image || 'assets/default-avatar.png'" class="w-8 h-8 rounded-full object-cover" />
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </ng-container>
+    <ng-template #guest>
+      <div class="hidden md:flex gap-2"><button (click)="onLogin()" class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng nhập</button><button (click)="onRegister()" class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng ký</button></div>
+    </ng-template>
 
+    <!-- Profile dropdown component mounted -->
+    <app-profile-menu *ngIf="dropdownOpen" (closed)="dropdownOpen=false" [fullname]="(user$ | async)?.Fullname"></app-profile-menu>
     <!-- Mobile hamburger -->
     <button class="md:hidden" (click)="navOpen = !navOpen">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
