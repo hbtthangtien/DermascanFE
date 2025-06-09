@@ -1,0 +1,27 @@
+<div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-xl rounded-3xl p-8 shadow-2xl relative flex flex-col items-center gap-6">
+    <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl" (click)="close.emit()">✕</button>
+    <h2 class="text-2xl font-semibold text-center">Quét mã QR để thanh toán</h2>
+
+    <!-- Ảnh QR đã thu nhỏ -->
+    <div class="w-80 h-80 flex items-center justify-center" *ngIf="qrUrl; else loading">
+      <img [src]="qrUrl" class="w-full h-full object-contain" />
+    </div>
+<p class="text-sm text-gray-500 text-center">
+    Vui lòng ghi đúng nội dung chuyển khoản theo mã trên.
+</p>
+    <p class="text-sm text-gray-500 text-center">
+      Sau khi chuyển khoản, tài khoản của bạn sẽ được kích hoạt trong vòng <span class="font-semibold text-emerald-600">5 phút</span>.
+    </p>
+
+    <ng-template #loading>
+      <div class="w-80 h-80 rounded-2xl bg-gray-100 flex items-center justify-center animate-pulse">
+        <svg class="animate-spin w-8 h-8 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>
+          <path d="M22 12a10 10 0 00-10-10" stroke-linecap="round" stroke-opacity="0.75"/>
+        </svg>
+      </div>
+      <p class="text-sm text-gray-500 mt-4">Đang tạo mã QR, vui lòng đợi...</p>
+    </ng-template>
+  </div>
+</div>

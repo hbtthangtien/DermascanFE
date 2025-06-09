@@ -183,5 +183,6 @@
         class="rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">Thoát</button>
     </div>
   </div>
-
+<app-subscription-modal *ngIf="showPlanModal" [plans]="plans" (close)="showPlanModal=false" (purchase)="purchasePlan($event)"></app-subscription-modal>
+<app-payment-modal *ngIf="showQrModal" [qrUrl]="qrUrl" (close)="showQrModal=false"></app-payment-modal>
 </section>
