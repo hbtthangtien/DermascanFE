@@ -5,6 +5,8 @@ import { RegisterComponent } from './register/register.component';
 import { ScanAIComponent } from './scan-ai/scan-ai.component';
 import { SupportComponent } from './support/support.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { AdminLayoutComponent } from './Admin/admin-layout/admin-layout.component';
+import { AdminOrdersComponent } from './Admin/admin-orders/admin-orders.component';
 
 export const routes: Routes = [
     {
@@ -16,7 +18,14 @@ export const routes: Routes = [
     {path:'scan', component:ScanAIComponent},
     {path:'support', component:SupportComponent},
     {path:'feedback',component:FeedbackComponent},
-
+    {
+        path:'admin',
+        component:AdminLayoutComponent,
+        children:[
+            {path:'',redirectTo:'orders',pathMatch:'full'},
+            {path: 'orders', component: AdminOrdersComponent}
+        ]
+    },
 
 
 

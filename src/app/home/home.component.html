@@ -1,115 +1,158 @@
-<section class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] text-white py-16 text-center">
-  <div class="max-w-3xl mx-auto px-4">
-    <h1 class="text-3xl md:text-4xl font-bold mb-4">Chăm sóc da thông minh với AI</h1>
-    <p class="mb-8 text-lg md:text-xl">Phân tích da chính xác, đưa ra gợi ý dẫn đầu cá nhân hóa</p>
+<body class="font-inter antialiased bg-[#D4ECE1] text-gray-700 selection:bg-yellow-300 selection:text-emerald-900">
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-[#F99FCF] via-[#B2EDE3] to-[#4A90E2] py-10 min-h-[420px] flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="w-full h-full bg-white/35 backdrop-blur-2xl"></div>
+    <svg class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[110vw] h-24 opacity-40 pointer-events-none" viewBox="0 0 1440 320">
+      <path fill="#B2EDE3" fill-opacity="0.14" d="M0,224L80,202.7C160,181,320,139,480,117.3C640,96,800,96,960,122.7C1120,149,1280,203,1360,229.3L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+    </svg>
+  </div>
+  <!-- Nội dung chính -->
+  <div class="relative z-10 max-w-3xl mx-auto w-full px-4 py-7 bg-white/65 rounded-2xl shadow-xl backdrop-blur-lg border border-[#FE9FC3]/20 flex flex-col items-center text-center">
+    <div class="flex flex-col items-center gap-1">
+      <img src="assets/images/Logo.png"
+           class="w-16 h-16 mb-1 shadow bg-white rounded-full border-2 border-[#FAD3E7]/30"
+           alt="AI Face Scan" />
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-[#121117]">
+        Chăm Sóc Da <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#D13D76] via-[#B2EDE3] to-[#4A90E2]">Cùng AI</span>
+      </h1>
+      <p class="text-base md:text-lg text-[#121117]/80 font-medium mt-2">
+        Phân tích chuẩn – Kết quả nhanh – Gợi ý cá nhân hóa.
+      </p>
+    </div>
     <a routerLink="/scan"
-      class="inline-block bg-yellow-400 text-emerald-900 font-semibold px-6 py-3 rounded-lg shadow hover:bg-yellow-300 transition">Quét
-      da ngay</a>
+      class="mt-5 inline-block px-7 py-3 bg-gradient-to-r from-[#F99FCF] via-[#B2EDE3] to-[#4A90E2] text-white text-base font-bold rounded-full shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300 tracking-wide">
+      🚀 Quét da ngay
+    </a>
+    <!-- Vision/Mission/Core value: thu gọn 3 icon hàng ngang -->
+    <div class="mt-5 grid grid-cols-3 gap-2 w-full">
+      <div class="flex flex-col items-center">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center bg-[#B2EDE3]/60 mb-1">
+          <img src="assets/images/vision.png" alt="Vision" class="w-5 h-5" />
+        </div>
+        <span class="text-xs font-semibold text-[#4A90E2]">Tầm nhìn</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center bg-[#FE9FC3]/60 mb-1">
+          <img src="assets/images/mission.png" alt="Mission" class="w-5 h-5" />
+        </div>
+        <span class="text-xs font-semibold text-[#D13D76]">Sứ mệnh</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center bg-[#D8F8F2]/60 mb-1">
+          <img src="assets/images/diamond.jpg" alt="Core Value" class="w-5 h-5" />
+        </div>
+        <span class="text-xs font-semibold text-[#4A90E2]">Giá trị</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Giới thiệu -->
-<section class="py-16 bg-[#D4ECE1] text-gray-700">
-  <div class="max-w-5xl mx-auto px-4 space-y-1">
-    <h2 class="text-4xl font-semibold">Giới thiệu</h2>
-    <p>
-      Dự án này ứng dụng trí tuệ nhân tạo (AI) và xử lý hình ảnh để phát hiện và phân loại các loại mụn trên da mặt dưới
-      mọi đường và ánh sáng. Hệ thống có thể phân biệt các loại mụn như mụn đầu đen, mụn viêm, mụn ẩn,… giúp người dùng
-      hiểu rõ tình trạng da của mình ngay tức thì và hướng dẫn trị phù hợp.
-    </p>
-    <a routerLink="/about" class="text-emerald-600 font-medium hover:underline">Xem thêm →</a>
+
+
+  <!-- Intro -->
+  <section class="py-20 bg-[#D8F8F2] text-gray-800">
+  <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-4xl font-bold mb-4 text-[#D13D76]">Vì Sao Nổi Bật?</h2>
+      <p class="text-xl mb-6">Ứng dụng AI thế hệ mới kết hợp xử lý hình ảnh chuyên sâu, nhận diện chính xác mọi vấn đề về da chỉ sau 1 lần chụp.</p>
+      <ul class="space-y-3 text-lg">
+        <li class="flex items-start"><span class="mr-2 text-[#FE9FC3]">✔️</span> Phát hiện mụn đầu đen, viêm, ẩn...</li>
+        <li class="flex items-start"><span class="mr-2 text-[#FE9FC3]">✔️</span> Đề xuất liệu trình & sản phẩm phù hợp riêng cho từng người.</li>
+        <li class="flex items-start"><span class="mr-2 text-[#FE9FC3]">✔️</span> Trải nghiệm tức thì – không phải chờ đợi, không cần đăng ký phức tạp.</li>
+      </ul>
+      <a routerLink="/about" class="mt-6 inline-block text-[#D13D76] hover:underline font-semibold text-base transition-all">Tìm hiểu thêm →</a>
+    </div>
+    <img src="assets/images/SkinAnalysis.webp" class="rounded-2xl shadow-2xl w-full max-w-lg" alt="Skin Analysis AI" />
   </div>
 </section>
 
-<!-- Tại sao dự án hoạt động tốt? -->
-<section class="py-10 bg-[#D4ECE1]">
+
+  <!-- Why Works -->
+  <section class="py-20 bg-gradient-to-l from-[#C4F0E0] via-[#FAD3E7] to-[#F99FCF]">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-4xl font-semibold mb-10 text-left">Tại sao dự án hoạt động tốt?</h2>
+    <h2 class="text-4xl font-bold mb-12 text-[#121117] text-center drop-shadow-xl">Điểm mạnh công nghệ của DermaScan</h2>
     <div class="grid md:grid-cols-4 gap-8">
       <ng-container *ngFor="let item of reasons">
-        <div class="flex flex-col items-center text-center">
-          <div class="bg-emerald-500/10 rounded-full p-4 mb-4">
-            <!-- Replace with icon library as needed -->
-            <img [src]="item.icon" alt="icon" class="w-8 h-8 object-contain" />
+        <div class="group flex flex-col items-center bg-white/80 rounded-2xl p-8 shadow-lg transition hover:-translate-y-2 hover:shadow-2xl">
+          <div class="mb-4 p-5 bg-gradient-to-br from-[#D8F8F2] to-[#B2EDE3] rounded-full shadow-xl">
+            <img [src]="item.icon" alt="icon" class="w-12 h-12 object-contain group-hover:scale-110 transition" />
           </div>
-          <h3 class="font-medium mb-2">{{ item.title }}</h3>
-          <p
-            class="text-sm text-gray-600 text-base leading-7 text-justify max-w-md bg-[#D4ECE1] p-4 rounded-lg mx-auto">
-            {{ item.desc }}</p>
+          <h3 class="font-semibold mb-2 text-xl text-[#D13D76] group-hover:text-[#4A90E2]">{{ item.title }}</h3>
+          <p class="text-gray-700 text-base leading-7 text-center px-2">{{ item.desc }}</p>
         </div>
       </ng-container>
     </div>
   </div>
 </section>
+  
 
-<!-- Cách sử dụng -->
-<section class="py-16 bg-[#D4ECE1]">
+  <!-- How to Use -->
+  <section class="py-20 bg-white">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-4xl font-semibold mb-10 text-left">Cách sử dụng để đạt hiệu quả</h2>
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="bg-[#D4ECE1] p-6 rounded-xl max-w-md mx-auto text-gray-600 font-sans">
-        <div class="flex justify-center gap-4 mb-4">
-          <img src="assets/images/selfie.png" alt="camera" class="w-14 h-14" />
-          <img src="assets/images/upload-image-icon-1.jpg" alt="upload" class="w-14 h-14" />
-        </div>
-        <h3 class="text-black font-semibold text-lg leading-snug mb-4 text-center">
-          Chụp ảnh hoặc<br>đưa ảnh có sẵn lên
-        </h3>
-        <ul class="list-disc pl-5 text-sm space-y-2 text-left">
-          <li>
-            Đưa thiết bị lại gần mặt, hoặc đến gần vùng cần kiểm tra (dưới 10cm).
-            Ấn chụp và giữ thiết bị khoảng 5–10 giây để hệ thống ghi lại ảnh.
-          </li>
-          <li>
-            Đưa ảnh từ trong thiết bị của bạn lên trên hệ thống
-          </li>
-          <li>
-            <strong class="text-black">Lưu ý:</strong> Ánh sáng phải đủ, ảnh chụp hoặc ảnh trong máy phải rõ nét
-          </li>
+    <h2 class="text-4xl font-bold mb-12 text-[#4A90E2] text-center">Chỉ 3 bước đơn giản để sở hữu làn da mơ ước!</h2>
+    <div class="flex flex-col md:flex-row justify-center gap-8">
+      <!-- Step 1 -->
+      <div class="flex-1 bg-[#D8F8F2] p-8 rounded-2xl shadow-lg text-center border-2 border-[#B2EDE3] relative">
+        <div class="absolute -top-7 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow flex items-center justify-center text-2xl font-bold text-[#D13D76] border-4 border-[#FE9FC3]">1</div>
+        <img src="assets/images/selfie.png" class="w-16 h-16 mx-auto mb-4" />
+        <h3 class="font-bold text-lg mb-2">Chụp/Upload Ảnh</h3>
+        <p class="text-gray-700">Chụp ảnh khuôn mặt rõ nét hoặc tải ảnh lên từ thiết bị.</p>
+      </div>
+      <!-- Step 2 -->
+      <div class="flex-1 bg-[#D8F8F2] p-8 rounded-2xl shadow-lg text-center border-2 border-[#B2EDE3] relative">
+        <div class="absolute -top-7 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow flex items-center justify-center text-2xl font-bold text-[#D13D76] border-4 border-[#FE9FC3]">2</div>
+        <img src="assets/images/Check-box-icon.png" class="w-16 h-16 mx-auto mb-4" />
+        <h3 class="font-bold text-lg mb-2">Gửi Phân Tích AI</h3>
+        <p class="text-gray-700">Ảnh sẽ được phân tích ngay lập tức bằng AI siêu mạnh mẽ.</p>
+      </div>
+      <!-- Step 3 -->
+      <div class="flex-1 bg-[#D8F8F2] p-8 rounded-2xl shadow-lg text-center border-2 border-[#B2EDE3] relative">
+        <div class="absolute -top-7 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow flex items-center justify-center text-2xl font-bold text-[#D13D76] border-4 border-[#FE9FC3]">3</div>
+        <img src="assets/images/advice.png" class="w-16 h-16 mx-auto mb-4" />
+        <h3 class="font-bold text-lg mb-2">Nhận Kết Quả & Lời Khuyên</h3>
+        <p class="text-gray-700">Nhận phản hồi chỉ trong 60 giây và lộ trình chăm sóc cá nhân hóa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- How it works -->
+  <section class="py-20 bg-gradient-to-br from-[#B2EDE3] via-[#D8F8F2] to-[#FE9FC3]">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-8">
+      <h2 class="text-3xl font-extrabold text-[#D13D76] mb-4">AI Phân Tích Ảnh Như Thế Nào?</h2>
+      <p class="text-lg text-gray-700">
+        Công nghệ AI Deep Learning (CNN) độc quyền, huấn luyện với hàng chục nghìn ảnh da liễu thực tế.
+        Ảnh của bạn được xử lý qua nhiều lớp: <b>lọc – nhận diện – phân đoạn – phân loại mụn</b>.
+      </p>
+      <div class="bg-white/80 rounded-xl shadow-lg px-6 py-4">
+        <ul class="list-disc list-inside text-base text-gray-700 space-y-2">
+          <li>Tự động phát hiện vùng da mặt.</li>
+          <li>Chia nhỏ từng pixel, nhận diện từng loại mụn và vùng da có vấn đề.</li>
+          <li>Đề xuất giải pháp dựa trên dữ liệu & kinh nghiệm chuyên gia.</li>
         </ul>
       </div>
-      <div class="bg-[#D4ECE1] p-6 rounded-xl max-w-md mx-auto text-gray-600 font-sans">
-        <div class="flex justify-center gap-4 mb-4">
-          <div class="flex justify-center gap-4 mb-4">
-            <img src="assets/images/Check-box-icon.png" alt="camera" class="w-14 h-14" />
-            <img src="assets/images/upload-1024.webp" alt="upload" class="w-14 h-14" />
-          </div>
-        </div>
-        <h3 class="text-black font-semibold text-lg leading-snug mb-4 text-center">
-          Xác định và gửi
-        </h3>
-        <p class="text-sm text-gray-600">Gửi ảnh của bạn đến hệ thống Trí tuệ nhân tạo. Hệ thống sẽ phân tích và gửi cho bạn kết quả cuối cùng.</p>
-      </div>
-      <div class="bg-[#D4ECE1] p-6 rounded-xl max-w-md mx-auto text-gray-600 font-sans">
-        <div class="flex justify-center gap-4 mb-4">
-          <div class="flex justify-center gap-4 mb-4">
-            <img src="assets/images/statisticReport.png" alt="camera" class="w-14 h-14" />
-            <img src="assets/images/advice.png" alt="upload" class="w-14 h-14" />
-          </div>
-        </div>
-        <h3 class="text-black font-semibold text-lg leading-snug mb-4 text-center">
-          Nhận kết quả và lời khuyên tham khảo
-        </h3>
-        <p class="text-sm text-gray-600">Nhận kết quả trong vòng 60 giây và lời khuyên liên quan về các bước tiếp theo cần thực hiện</p>
-      </div>
+      <p class="text-gray-600 text-sm">Mô hình liên tục cập nhật để chính xác & cá nhân hóa hơn mỗi ngày.</p>
+    </div>
+    <div class="relative">
+      <img src="assets/images/neural-network-la-gi-1.webp" alt="AI skin analysis" class="rounded-3xl shadow-2xl border-8 border-white/60 blur-sm hover:blur-0 transition duration-700" />
+      <div class="absolute top-4 left-4 bg-white/80 rounded-2xl px-4 py-2 text-[#4A90E2] font-bold shadow-lg">AI in Action</div>
     </div>
   </div>
 </section>
 
-<!-- Phân tích hình ảnh (placeholder) -->
-<section class="py-16 bg-[#D4ECE1]">
-  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-    <div class="space-y-6">
-      <h2 class="text-2xl font-semibold">Cách hệ thống phân tích ảnh?</h2>
-      <p class="text-gray-600">AI kết hợp học sâu (deep learning) với mạng CNN được huấn luyện trên hàng chục nghìn ảnh
-        da liễu gắn nhãn. Ảnh của bạn được tiền xử lý, phát hiện vùng da mặt, sau đó phân đoạn và phân loại từng pixel
-        thành các loại mụn tương ứng.</p>
-      <p class="text-gray-600">Mô hình liên tục được cập nhật dữ liệu mới để cải thiện độ chính xác.</p>
-    </div>
-    <img src="assets/images/neural-network-la-gi-1.webp" alt="AI skin analysis" class="rounded-xl shadow-lg" />
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-[#F99FCF] to-[#B2EDE3] text-[#121117] py-8 text-center text-base font-medium shadow-inner relative">
+  <div class="flex justify-center items-center gap-3">
+    <img src="assets/images/Logo.png" class="w-10 h-10 rounded-full shadow-lg bg-white" alt="Logo" />
+    <span class="text-lg font-bold tracking-widest">DermaScan AI</span>
   </div>
-</section>
+  <p class="mt-2 opacity-80">© 2025 DermaScan. Made with ❤️ by AI & Beauty Experts.</p>
+</footer>
 
-<!-- Footer minimal -->
-<footer class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] text-white py-6 text-center text-sm">© 2025 DermaScan. All
-  rights reserved.</footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({ once: true });</script>
+</body>

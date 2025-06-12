@@ -1,0 +1,42 @@
+<section class="p-6 max-w-7xl mx-auto space-y-8">
+    <h1 class="text-2xl font-semibold">Quản lý đơn hàng</h1>
+
+    <!-- Search & filter -->
+    <div class="flex flex-wrap gap-4 items-center">
+      <input [(ngModel)]="keyword" placeholder="Tìm theo tên / mã đơn / code" class="w-72 h-9 rounded px-3 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm" />
+      <select [(ngModel)]="statusFilter" class="h-9 rounded px-2 bg-gray-100 text-sm">
+        <option value="">Tất cả trạng thái</option>
+        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+          <tr>
+            <th class="px-3 py-2 text-left">Mã đơn</th>
+            <th class="px-3 py-2 text-left">Họ tên</th>
+            <th class="px-3 py-2">Gói</th>
+            <th class="px-3 py-2">Mô tả gói</th>
+            <th class="px-3 py-2 text-center">Trạng thái</th>
+            <th class="px-3 py-2 text-center">Code</th>
+            <th class="px-3 py-2 text-center">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of filtered() ; let i=index" [ngClass]="i%2?'bg-gray-50':''">
+            <td class="px-3 py-2">{{ order.id }}</td>
+            <td class="px-3 py-2">{{ order.fullName }}</td>
+            <td class="px-3 py-2 text-center">{{ order.planName }}</td>
+            <td class="px-3 py-2 max-w-xs truncate" [title]="order.planDescription">{{ order.planDescription }}</td>
+            <td class="px-3 py-2 text-center"><span [ngClass]="badge(order.status)" class="px-2 py-0.5 rounded-full text-xs font-medium capitalize">{{ order.status.toString() }}</span></td>
+            <td class="px-3 py-2 text-center">{{ order.code }}</td>
+            <td class="px-3 py-2 text-center">
+              <button *ngIf="order.status==='Pending'" (click)="markPaid(order)" class="text-emerald-600 hover:underline text-xs">Đánh dấu đã thanh toán</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>

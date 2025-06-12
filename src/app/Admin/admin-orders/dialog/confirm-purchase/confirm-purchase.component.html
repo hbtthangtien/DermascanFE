@@ -1,0 +1,11 @@
+<div class="parent">
+  <div class="dialog-container">
+    <h2 class="dialog-title">Confirm delete</h2>
+    <p class="dialog-message">{{ data.message || 'Bạn có chắc chắn kích hoạt cho user này không?' }}</p>
+    <div class="dialog-actions">
+      <button mat-raised-button class="btn-cancel" (click)="this.dialogRef.close()">Hủy</button>
+      <button mat-button color="warn" class="btn-delete" (click)="onConfirm()">Đồng ýý</button>
+    </div>
+  </div>
+
+</div>

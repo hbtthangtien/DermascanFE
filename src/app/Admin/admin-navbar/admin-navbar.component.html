@@ -1,0 +1,20 @@
+<nav class="bg-slate-800 text-white sticky top-0 z-50 shadow">
+    <div class="max-w-7xl mx-auto h-14 flex items-center justify-between px-4">
+      <a routerLink="/admin" class="flex items-center gap-2 font-semibold text-lg">
+        <img src="assets/logo.svg" class="h-6 w-6" /> Admin • DermaScan
+      </a>
+      <ul class="hidden md:flex gap-6 text-sm font-medium">
+        <li><a routerLink="/admin/orders" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Đơn hàng</a></li>
+        <!-- Giả sử có thêm routes khác -->
+        <!-- <li><a routerLink="/admin/users" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Người dùng</a></li> -->
+      </ul>
+      <button class="md:hidden" (click)="navOpen = !navOpen">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="navOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
+        </svg>
+      </button>
+    </div>
+    <ul *ngIf="navOpen" class="md:hidden bg-slate-900/95 backdrop-blur px-6 pb-4 space-y-3">
+      <li><a routerLink="/admin/orders" (click)="navOpen=false" class="block py-2 border-b border-white/10">Đơn hàng</a></li>
+    </ul>
+  </nav>
