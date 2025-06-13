@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ScanAnalysisService } from '../services/scan-analysis.service';
-import { NotificateService } from '../services/notificate.service';
-import { ResponseAnalysis } from '../models/SkinAnalysis/response-analysis';
+import { ScanAnalysisService } from '../../services/scan-analysis.service';
+import { NotificateService } from '../../services/notificate.service';
+import { ResponseAnalysis } from '../../models/SkinAnalysis/response-analysis';
 import { FormsModule } from '@angular/forms';
-import { Plan } from '../models/SubscriptionPlan/plan';
-import { PlanService } from '../services/plan.service';
+import { Plan } from '../../models/SubscriptionPlan/plan';
+import { PlanService } from '../../services/plan.service';
 import { SubcriptionModalComponent } from "../subcription-modal/subcription-modal.component";
 import { PaymentModalComponent } from "../payment-modal/payment-modal.component";
-import { PaymentService } from '../services/payment.service';
-import { RequestVietQr } from '../models/VietQr/request-viet-qr';
+import { PaymentService } from '../../services/payment.service';
+import { RequestVietQr } from '../../models/VietQr/request-viet-qr';
 
 @Component({
   selector: 'app-scan-ai',

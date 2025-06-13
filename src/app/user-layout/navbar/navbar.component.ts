@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { UserClaim } from '../models/User/user-claim';
-import { AuthService } from '../services/auth.service';
+import { UserClaim } from '../../models/User/user-claim';
+import { AuthService } from '../../services/auth.service';
 import { ProfileMenuComponent } from "../profile-menu/profile-menu.component";
 import { Observable } from 'rxjs/internal/Observable';
 

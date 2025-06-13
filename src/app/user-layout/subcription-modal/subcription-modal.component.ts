@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Plan } from '../models/SubscriptionPlan/plan';
+import { Plan } from '../../models/SubscriptionPlan/plan';
 import { CommonModule } from '@angular/common';
 
 @Component({

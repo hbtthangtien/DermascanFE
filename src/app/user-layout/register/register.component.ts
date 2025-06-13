@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { UserRegister } from '../models/User/user-register';
-import { BaseService } from '../services/base-service.service';
-import { IdResponse } from '../models/common/id-response';
-import { NotificateService } from '../services/notificate.service';
-import { AccountService } from '../services/account.service';
+import { UserRegister } from '../../models/User/user-register';
+import { BaseService } from '../../services/base-service.service';
+import { IdResponse } from '../../models/common/id-response';
+import { NotificateService } from '../../services/notificate.service';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-register',

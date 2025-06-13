@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BaseService } from '../services/base-service.service';
-import { LoginRequest } from '../models/Auth/login-request';
-import { NotificateService } from '../services/notificate.service';
-import { AuthService } from '../services/auth.service';
+import { BaseService } from '../../services/base-service.service';
+import { LoginRequest } from '../../models/Auth/login-request';
+import { NotificateService } from '../../services/notificate.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',

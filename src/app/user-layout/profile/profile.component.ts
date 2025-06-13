@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Profile } from '../models/User/profile';
+import { Profile } from '../../models/User/profile';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
