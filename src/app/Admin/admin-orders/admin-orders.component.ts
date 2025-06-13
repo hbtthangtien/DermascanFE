@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { PurchaseOrderView, UserPlanStatus } from '../../models/admin/SubscriptionOrder/purchase-order-view';
 import { SubscriptionService } from '../../services/admin/subscription.service';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmPurchaseComponent } from './dialog/confirm-purchase/confirm-purchase.component';
 
 @Component({
   selector: 'app-admin-orders',
@@ -18,7 +20,7 @@ export class AdminOrdersComponent {
   statusFilter: PurchaseOrderView['status'] | '' = '';
   statuses: PurchaseOrderView['status'][] = ['Active', 'Pending', 'Expired', 'Canceled', 'Trial', 'Failed'];
 
-  constructor(private orderSvc: SubscriptionService) { }
+  constructor(private orderSvc: SubscriptionService, public dialogRef: MatDialog) { }
   ngOnInit() { this.orderSvc.getOrders().subscribe(o => (this.orders = o.data)); }
 
   filtered(): PurchaseOrderView[] {
@@ -42,8 +44,14 @@ export class AdminOrdersComponent {
     const key = typeof s === 'number' ? UserPlanStatus[s] : s;
     return map[key] || 'bg-gray-100 text-gray-600';
   };
-  
-  markPaid(o: PurchaseOrderView) { 
-      
+
+  markPaid(o: PurchaseOrderView) {
+    this.dialogRef.open(ConfirmPurchaseComponent, {
+      width: '400px',
+      height: '200px',
+      data: {
+        id: o.id
+      }
+    });
   }
 }

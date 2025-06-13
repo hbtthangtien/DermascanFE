@@ -1,0 +1,33 @@
+.dialog-container {
+  padding: 24px;
+  max-width: 400px;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.dialog-title {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #d32f2f;
+}
+
+.dialog-message {
+  font-size: 16px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-cancel {
+  color: #666;
+}
+
+.btn-delete {
+  font-weight: bold;
+}

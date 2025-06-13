@@ -16,7 +16,16 @@ export class ConfirmPurchaseComponent {
   private notiService = inject(NotificateService);
   private subscriptionService = inject(SubscriptionService);
   onConfirm() {
-    this.subscriptionService
+    console.log(this.data)
+    this.subscriptionService.confirmPurchaseSubscription(this.data.id).subscribe({
+        next: (resp) =>{
+          this.notiService.success("Đã nâng cấp thành công");
+          this.dialogRef.close(true);
+        },
+        error: (err)=>{
+          this.notiService.error("Hệ thống đang bảo trì")
+        }
+    })
   }
 
 }

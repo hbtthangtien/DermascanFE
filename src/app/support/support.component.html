@@ -1,9 +1,52 @@
-<section class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-emerald-500 via-green-400 to-sky-500 flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-[2rem] p-8 shadow-lg space-y-6">
-    <a routerLink="/" class="text-2xl text-emerald-800 hover:text-emerald-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></a>
-    <h1 class="text-3xl font-semibold">Liên hệ và hỗ trợ</h1>
-    <input type="text" [(ngModel)]="issue" placeholder="Nhập vấn đề bạn gặp phải" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-    <button (click)="send()" class="rounded-full w-24 h-9 bg-emerald-500 hover:bg-emerald-600 text-white font-medium">Gửi</button>
-    <input type="text" [(ngModel)]="search" placeholder="Tìm kiếm vấn đề gặp phải" (keyup.enter)="doSearch()" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+<section class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-[#F99FCF] via-[#B2EDE3] to-[#72BBF7] flex items-center justify-center p-4 select-none">
+  <div class="relative w-full max-w-lg bg-white/90 backdrop-blur-xl rounded-[2.5rem] p-10 shadow-lg border border-gray-200 flex flex-col items-center space-y-7 animate-fade-in-up">
+    <!-- Nút về home -->
+    <a routerLink="/" class="absolute top-7 left-7 text-emerald-600 hover:text-emerald-500 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    </a>
+    <!-- Tiêu đề -->
+    <h1 class="text-3xl md:text-4xl font-extrabold text-emerald-700 tracking-tight mb-1 drop-shadow-sm">Liên hệ &amp; Hỗ trợ</h1>
+    <p class="text-center text-gray-600 font-medium mb-3">Bạn gặp khó khăn? Hãy cho chúng tôi biết, bạn sẽ được phản hồi trong 24h.</p>
+    <!-- Vấn đề gặp phải -->
+    <div class="w-full flex items-center bg-gray-100 rounded-full h-12 px-4 shadow-inner focus-within:ring-2 focus-within:ring-emerald-300 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-emerald-300 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h.01M12 4v4m0 4v4" /></svg>
+      <input type="text" [(ngModel)]="issue" placeholder="Nhập vấn đề bạn gặp phải"
+             class="flex-1 bg-transparent outline-none text-base font-medium text-gray-700" />
+    </div>
+    <!-- Nút gửi -->
+    <button (click)="send()" class="w-full md:w-44 h-11 rounded-full bg-emerald-500/90 hover:bg-emerald-600/90 text-white text-lg font-semibold shadow-none transition-all duration-200 tracking-wide">
+      Gửi
+    </button>
+    <!-- Tìm kiếm vấn đề gặp phải -->
+    <div class="w-full flex items-center bg-gray-100 rounded-full h-12 px-4 shadow-inner focus-within:ring-2 focus-within:ring-sky-200 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-sky-300 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" [(ngModel)]="search" placeholder="Tìm kiếm vấn đề..."
+             (keyup.enter)="doSearch()"
+             class="flex-1 bg-transparent outline-none text-base font-medium text-gray-700" />
+    </div>
   </div>
+
+  <!-- Dialog gửi thành công -->
+  <div *ngIf="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div class="bg-white/95 rounded-2xl p-8 max-w-xs w-full flex flex-col items-center shadow-2xl text-center animate-fade-in-up border border-emerald-100">
+      <svg class="w-14 h-14 text-emerald-500 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+      </svg>
+      <div class="text-lg font-semibold text-emerald-700 mb-2">Gửi thành công!</div>
+      <p class="text-gray-600 mb-3">Chúng tôi đã nhận được yêu cầu và sẽ phản hồi cho bạn trong thời gian sớm nhất.</p>
+      <button (click)="showSuccessDialog=false"
+        class="mt-2 px-6 h-10 rounded-full bg-emerald-500 text-white font-semibold hover:bg-emerald-600 shadow">
+        Đóng
+      </button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(32px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .animate-fade-in-up { animation: fade-in-up 0.7s cubic-bezier(.38,.6,.3,1) both;}
+  </style>
 </section>

@@ -1,188 +1,246 @@
 <section
-  class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] flex items-center justify-center p-4 overflow-auto">
-  <!-- STEP 1 – guide -->
-  <div *ngIf="step === 1" class="bg-white w-full max-w-xl rounded-[2rem] p-10 shadow-lg text-center">
-    <div class="flex items-start gap-3 mb-6">
-      <svg style="height: 59px;width: 59px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-gray-600">
-        <circle cx="11" cy="11" r="8" />
-        <path d="M21 21l-4.35-4.35" /></svg>
-      <h2 class="text-2xl font-semibold">Trước khi bạn bắt đầu – hãy tìm hiểu cách tạo hoặc tải một bức ảnh phù hợp</h2>
-    </div>
-    <ul class="list-disc list-inside text-left text-sm space-y-2">
-      <li>Chụp gần mặt, ánh sáng đều, tránh bóng tối mạnh.</li>
-      <li>Ảnh rõ nét ≥ 1024×768.</li>
-      <li>Giữ camera song song bề mặt da; lấy nét chính xác.</li>
-      <li>Nền & trang phục đơn giản.</li>
-    </ul>
-    <button (click)="next()"
-      class="mt-8 rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow">Tiếp
-      tục</button>
-  </div>
+  class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-[#F99FCF] via-[#B2EDE3] to-[#72BBF7] flex flex-col items-center justify-center p-4"
+  style="min-height: 100vh; background: linear-gradient(to bottom, #F99FCF 0%, #B2EDE3 45%, #C2FAFE 80%, #72BBF7 100%);"
+  >
 
-  <!-- STEP 2 – choose source -->
-  <div *ngIf="step === 2" class="bg-white w-full max-w-xl rounded-[2rem] p-10 shadow-lg text-center space-y-8">
-    <div class="grid grid-cols-2 gap-8 items-center justify-center">
-      <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goCamera()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-14 h-14 text-gray-700 group-hover:text-emerald-600 transition">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M2.25 7.5h2.1a1.5 1.5 0 001.34-.83l.68-1.34A1.5 1.5 0 017.55 4.5h8.9a1.5 1.5 0 011.33.83l.68 1.34a1.5 1.5 0 001.34.83h2.1A1.5 1.5 0 0123 9v9.75A2.25 2.25 0 0120.75 21h-17.5A2.25 2.25 0 011 18.75V9a1.5 1.5 0 011.25-1.5z" />
-          <circle cx="12" cy="13" r="3.75" /></svg>
-        <span class="font-medium text-sm">Chụp ảnh</span>
-      </div>
-      <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goUpload()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-14 h-14 text-gray-700 group-hover:text-emerald-600 transition">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 10.5L12 6m0 0l-4.5 4.5M12 6v9" />
-        </svg>
-        <span class="font-medium text-sm">Tải ảnh</span>
-      </div>
-    </div>
-    <!-- input để chụp ảnh -->
-    <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" hidden>
-
-    <!-- input để chọn ảnh từ thư viện -->
-    <input #uploadInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
-
-    <button (click)="back()"
-      class="rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow">Quay lại</button>
-  </div>
-
-  <!-- STEP 3 – capture -->
-  <!-- <div *ngIf="step === 3" class="flex flex-col items-center justify-center space-y-8">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2"
-      class="w-48 h-48">
-      <rect x="4" y="4" width="56" height="56" rx="12" fill="white" stroke="white" />
-      <path d="M32 18c-8 0-14 6-14 14 0 6 6 14 14 14s14-8 14-14c0-8-6-14-14-14z" stroke="#4b5563" />
-      <circle cx="24" cy="28" r="2" fill="#4b5563" />
-      <circle cx="40" cy="28" r="2" fill="#4b5563" />
-      <path d="M22 36c2.667 2 5.333 2 8 0" stroke="#4b5563" stroke-linecap="round" /></svg>
-    <button (click)="capturePhoto()"
-      class="flex items-center justify-center w-11 h-11 rounded-full bg-black/80 text-white hover:bg-black/60">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-        <path d="M12 5.25a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5z" /></svg>
-    </button>
-  </div> -->
-  <div *ngIf="step === 3" class="flex flex-col items-center gap-4">
-    <video #video autoplay playsinline class="rounded-lg shadow max-w-full"></video>
-    <canvas #canvas hidden></canvas>
-    <button (click)="capturePhoto()"
-      class="rounded-full px-6 py-2 bg-emerald-500 text-white font-medium hover:bg-emerald-600">Chụp ảnh</button>
-  </div>
-
-  <!-- STEP 4 – loading -->
-  <div *ngIf="step === 4" class="flex flex-col items-center justify-center space-y-8 text-white">
-    <div class="w-72 h-72 rounded-[3rem] bg-cover bg-center flex items-center justify-center animate-pulse mt-4"
-      [ngStyle]="{ 'background-image': selectedImageUrl ? 'url(' + selectedImageUrl + ')' : 'none' }">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-        class="w-12 h-12 animate-spin">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M12 3v3m0 12v3m7.071-15.071l-2.121 2.121M6.343 17.657l-2.121 2.121M21 12h-3M6 12H3m15.071 4.243l-2.121-2.121M6.343 6.343L4.222 4.222" />
-      </svg>
-    </div>
-    <p class="font-medium">Đang xử lý, xin đợi một lát!</p>
-  </div>
-
-  <!-- STEP 5 – result & analysis -->
-  <!-- <div *ngIf="step === 5" class="w-full">
-    <div
-      class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] p-6 rounded-t-2xl flex justify-between items-start text-white font-semibold">
-      <h3>Kết quả</h3>
-      <h3>Phân tích</h3>
-    </div>
-    <div
-      class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] p-6 flex flex-col md:flex-row gap-6 items-start justify-center">
-      <img [src]="resultImage" alt="Result" class="w-72 rounded" />
-      <img [src]="chartImage" alt="Chart" class="w-72 rounded bg-white" />
-      <button (click)="showAdvice()"
-        class="self-center md:self-start md:ml-auto mt-4 md:mt-0 rounded-full px-6 py-2 bg-emerald-100 text-emerald-700 font-medium hover:bg-emerald-200">Thoát</button>
-    </div>
-  </div> -->
-
-  <!-- STEP 6 – advice -->
-  <!-- <div *ngIf="step === 6" class="w-full max-w-4xl flex flex-col items-center">
-
-    <div class="bg-gradient-to-r from-[#6AC47E] to-[#4A90E2] w-full p-8 flex flex-col items-center">
-      <div
-        class="bg-white rounded-[2rem] w-full max-w-xl min-h-[250px] p-8 text-center text-lg font-medium whitespace-pre-line">
-        {{ adviceText }}</div>
-      <button (click)="exit()"
-        class="mt-8 rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow">Thoát</button>
-    </div>
-  </div> -->
-
-  <!-- STEP 5 – result -->
-  <div *ngIf="step === 5 && analysis" class="w-full max-w-5xl mx-auto p-4 space-y-6">
-    <div class="grid md:grid-cols-2 gap-6">
-      <!-- Image with bounding boxes (simple overlay) -->
-      <div class="relative">
-        <img [src]="selectedImageUrl || 'assets/placeholder.jpg'" class="w-full rounded" />
-        <ng-container *ngFor="let box of boundingBoxes">
-          <div class="absolute border-2 border-emerald-400" [ngStyle]="{
-          left: (box.x - box.width/2) + 'px', top: (box.y - box.height) + 'px', width: box.width + 'px', height: box.height + 'px'
-        }"></div>
-        </ng-container>
-      </div>
-
-      <!-- Overall & products -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold">Tổng quan</h3>
-        <p class="font-medium">Trạng thái: <span class="text-emerald-600">{{ analysis.overallAnalysis.status }}</span>
-        </p>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <div *ngFor="let k of (analysis.overallAnalysis.score | keyvalue)">{{ k.key }}: <span
-              class="font-semibold">{{ k.value }}</span></div>
+  <!-- STEPPER – KHÔNG absolute, luôn nằm trên, không che nội dung -->
+  <div class="w-full max-w-4xl mx-auto mt-6 mb-8">
+    <div class="flex items-center justify-between gap-1">
+      <ng-container *ngFor="let s of ['Hướng dẫn', 'Chọn ảnh', 'Chụp', 'Chờ AI', 'Kết quả', 'Tư vấn']; let i = index">
+        <div class="flex-1 flex flex-col items-center">
+          <div [ngClass]="{
+              'bg-emerald-500 scale-110 shadow-xl text-white': step === i+1,
+              'bg-gray-200 text-gray-500': step !== i+1
+            }"
+            class="w-8 h-8 flex items-center justify-center rounded-full font-bold transition-all duration-300 text-base">
+            {{ i+1 }}
+          </div>
+          <span class="text-xs mt-1 font-medium" [class.text-emerald-600]="step === i+1">{{ s }}</span>
         </div>
-        <h4 class="mt-4 font-semibold">Sản phẩm gợi ý</h4>
-        <ul class="list-disc list-inside text-sm space-y-1">
-          <li *ngFor="let p of analysis.suggestedProducts"><span class="font-medium">{{ p.productName }}</span> –
-            {{ p.recommendationReason }}</li>
-        </ul>
+        <div *ngIf="i<5" class="flex-1 h-1 bg-gradient-to-r from-emerald-300 via-emerald-500/40 to-blue-400 rounded">
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- CARD NỘI DUNG CÁC BƯỚC -->
+  <div
+    class="bg-white/80 w-full max-w-4xl rounded-[2rem] p-10 shadow-2xl border-2 border-emerald-200/40 animate-fade-in-up text-center backdrop-blur-2xl">
+
+    <!-- STEP 1: Hướng dẫn -->
+    <div *ngIf="step === 1">
+      <div class="flex items-start gap-3 mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" style="height: 59px;width: 59px;" fill="none" stroke="currentColor"
+          stroke-width="1.5" class="text-emerald-500 drop-shadow-lg">
+          <circle cx="29.5" cy="29.5" r="25" />
+          <path d="M55 55l-17-17" /></svg>
+        <h2 class="text-2xl md:text-3xl font-bold text-emerald-700 leading-tight">
+          Trước khi bắt đầu<br>
+          <span class="text-gray-600 font-medium">Tạo ảnh chuẩn để AI phân tích tốt nhất</span>
+        </h2>
+      </div>
+      <ul class="list-disc list-inside text-left text-base space-y-2 text-gray-700 font-medium">
+        <li>Chụp gần mặt, ánh sáng đều, tránh bóng tối mạnh.</li>
+        <li>Ảnh rõ nét ≥ 1024×768.</li>
+        <li>Camera song song da, lấy nét chính xác.</li>
+        <li>Nền & trang phục đơn giản.</li>
+      </ul>
+      <button (click)="next()"
+        class="mt-8 rounded-full px-8 h-12 bg-gradient-to-r from-emerald-400 to-blue-400 hover:scale-105 transition text-white text-lg font-semibold shadow-lg">Tiếp
+        tục</button>
+    </div>
+
+    <!-- STEP 2: Chọn/chụp ảnh -->
+    <div *ngIf="step === 2" class="space-y-10">
+      <div class="grid grid-cols-2 gap-8 items-center">
+        <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goCamera()">
+          <div
+            class="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-400/30 shadow-lg transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-14 h-14 text-emerald-500 group-hover:text-emerald-700 animate-bounce">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M2.25 7.5h2.1a1.5 1.5 0 001.34-.83l.68-1.34A1.5 1.5 0 017.55 4.5h8.9a1.5 1.5 0 011.33.83l.68 1.34a1.5 1.5 0 001.34.83h2.1A1.5 1.5 0 0123 9v9.75A2.25 2.25 0 0120.75 21h-17.5A2.25 2.25 0 011 18.75V9a1.5 1.5 0 011.25-1.5z" />
+              <circle cx="12" cy="13" r="3.75" />
+            </svg>
+          </div>
+          <span class="font-medium text-base text-emerald-700 group-hover:text-emerald-900">Chụp ảnh</span>
+        </div>
+        <div class="flex flex-col items-center gap-4 cursor-pointer group" (click)="goUpload()">
+          <div
+            class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-400/30 shadow-lg transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-14 h-14 text-blue-500 group-hover:text-blue-700 animate-bounce">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 10.5L12 6m0 0l-4.5 4.5M12 6v9" />
+            </svg>
+          </div>
+          <span class="font-medium text-base text-blue-700 group-hover:text-blue-900">Tải ảnh</span>
+        </div>
+      </div>
+      <!-- input để chụp/tải ảnh -->
+      <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" hidden>
+      <input #uploadInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+      <button (click)="back()"
+        class="rounded-full px-8 h-10 bg-gradient-to-r from-emerald-400 to-blue-400 hover:scale-105 transition text-white font-medium shadow">Quay
+        lại</button>
+    </div>
+
+    <!-- STEP 3: Chụp -->
+    <div *ngIf="step === 3" class="flex flex-col items-center gap-4">
+      <video #video autoplay playsinline class="rounded-lg shadow max-w-full"></video>
+      <canvas #canvas hidden></canvas>
+      <button (click)="capturePhoto()"
+        class="rounded-full px-8 h-10 bg-gradient-to-r from-emerald-400 to-blue-400 text-white font-medium hover:scale-105 shadow transition">Chụp
+        ảnh</button>
+    </div>
+
+    <!-- STEP 4: Loading -->
+    <div *ngIf="step === 4" class="flex flex-col items-center justify-center space-y-8 text-white">
+      <div
+        class="w-48 h-48 rounded-[2rem] bg-gradient-to-br from-emerald-400 via-blue-300 to-blue-400 shadow-xl flex items-center justify-center relative overflow-hidden animate-pulse">
+        <img *ngIf="selectedImageUrl" [src]="selectedImageUrl"
+          class="absolute inset-0 w-full h-full object-cover rounded-[2rem] opacity-40" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-16 h-16 text-white animate-spin z-10">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v3m0 12v3m7.071-15.071l-2.121 2.121M6.343 17.657l-2.121 2.121M21 12h-3M6 12H3m15.071 4.243l-2.121-2.121M6.343 6.343L4.222 4.222" />
+        </svg>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-200/10 to-blue-500/20"></div>
+      </div>
+      <p class="font-bold text-lg tracking-wide animate-pulse">AI đang phân tích, đợi xíu nhé!</p>
+    </div>
+
+    <!-- STEP 5: Kết quả & phân tích -->
+    <div *ngIf="step === 5 && analysis" class="w-full p-0 space-y-6 text-left">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Ảnh + bounding box -->
+        <div class="relative bg-white/80 rounded-2xl shadow-xl p-4 border-l-8 border-emerald-400">
+          <img [src]="selectedImageUrl || 'assets/placeholder.jpg'" class="w-full rounded mb-2" />
+          <ng-container *ngFor="let box of boundingBoxes">
+            <div class="absolute border-2 border-emerald-500 animate-pulse" [ngStyle]="{
+                left: (box.x - box.width/2) + 'px', top: (box.y - box.height) + 'px', width: box.width + 'px', height: box.height + 'px'
+              }"></div>
+          </ng-container>
+        </div>
+        <!-- Tổng quan & sản phẩm -->
+        <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-t-4 border-blue-300 space-y-2">
+          <h3 class="text-xl font-bold text-emerald-700 mb-2">Tổng quan</h3>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="font-medium">Trạng thái:</span>
+            <span
+              class="text-xl font-semibold text-emerald-600 animate-pulse">{{ analysis.overallAnalysis.status }}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div *ngFor="let k of (analysis.overallAnalysis.score | keyvalue)">
+              <span class="text-gray-600">{{ k.key }}</span>: <span
+                class="font-bold text-emerald-700">{{ k.value }}</span>
+            </div>
+          </div>
+          <h4 class="mt-4 font-semibold text-blue-700">Sản phẩm gợi ý</h4>
+          <ul class="list-disc list-inside text-sm space-y-1">
+            <li *ngFor="let p of analysis.suggestedProducts"><span
+                class="font-medium text-emerald-700">{{ p.productName }}</span> – {{ p.recommendationReason }}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Bảng phân tích vùng da -->
+      <h3 class="text-lg font-bold text-emerald-700 mt-6">Phân tích vùng da</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border rounded-xl shadow">
+          <thead class="bg-emerald-100 text-emerald-800">
+            <tr>
+              <th class="px-2 py-1 border">Vùng</th>
+              <th class="px-2 py-1 border">Điểm</th>
+              <th class="px-2 py-1 border text-left">Khuyến nghị</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let z of analysis.skinZoneAnalysis" class="hover:bg-emerald-50 transition">
+              <td class="border px-2 py-1 text-center">{{ z.zone }}</td>
+              <td class="border px-2 py-1 text-center">{{ z.score }}</td>
+              <td class="border px-2 py-1">{{ z.recommendation }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-right">
+        <button (click)="showAdvice()"
+          class="rounded-full px-7 py-2 bg-gradient-to-r from-emerald-400 to-blue-400 text-white font-bold hover:scale-105 shadow-md transition">Tiếp
+          tục</button>
       </div>
     </div>
 
-    <!-- Zone analysis table -->
-    <h3 class="text-lg font-semibold mt-6">Phân tích vùng da</h3>
-    <div class="overflow-x-auto">
-      <table class="min-w-full text-sm border">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="px-2 py-1 border">Vùng</th>
-            <th class="px-2 py-1 border">Điểm</th>
-            <th class="px-2 py-1 border text-left">Khuyến nghị</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let z of analysis.skinZoneAnalysis" class="hover:bg-gray-50">
-            <td class="border px-2 py-1 text-center">{{ z.zone }}</td>
-            <td class="border px-2 py-1 text-center">{{ z.score }}</td>
-            <td class="border px-2 py-1">{{ z.recommendation }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="text-right">
-      <button (click)="showAdvice()"
-        class="rounded-full px-6 py-2 bg-emerald-500 text-white font-medium hover:bg-emerald-600">Tiếp tục</button>
+    <!-- STEP 6: AI tư vấn -->
+    <div *ngIf="step === 6 && analysis"
+      class="w-full max-w-lg mx-auto bg-gradient-to-br from-emerald-50 via-blue-50 to-white rounded-2xl p-8 shadow-xl space-y-6 animate-fade-in-up">
+      <h2 class="text-2xl font-extrabold text-center text-emerald-700 mb-2">AI Tư vấn cá nhân hoá</h2>
+      <div class="space-y-4 text-base text-left">
+        <p><span class="font-bold text-emerald-600">Chung:</span> {{ analysis.advice.generalAdvice }}</p>
+        <p><span class="font-bold text-blue-600">Lối sống:</span> {{ analysis.advice.lifeStyleTips }}</p>
+        <p><span class="font-bold text-emerald-600">Chế độ ăn:</span> {{ analysis.advice.dietarySuggestions }}</p>
+      </div>
+      <div class="text-center">
+        <button (click)="exit()"
+          class="rounded-full px-8 h-12 bg-gradient-to-r from-emerald-400 to-blue-400 text-white font-bold shadow hover:scale-105 transition">Thoát</button>
+      </div>
     </div>
   </div>
+  <app-subscription-modal *ngIf="showPlanModal" [plans]="plans" (close)="showPlanModal=false"
+    (purchase)="purchasePlan($event)">
+  </app-subscription-modal>
 
-  <!-- STEP 6 – advice section (update to use analysis.advice) -->
-  <div *ngIf="step === 6 && analysis" class="max-w-3xl mx-auto bg-white rounded-2xl p-8 space-y-6">
-    <h2 class="text-xl font-semibold text-center">Một số lời khuyên tham khảo</h2>
-    <div class="space-y-4 text-sm whitespace-pre-line">
-      <p><span class="font-semibold">Chung:</span> {{ analysis.advice.generalAdvice }}</p>
-      <p><span class="font-semibold">Lối sống:</span> {{ analysis.advice.lifeStyleTips }}</p>
-      <p><span class="font-semibold">Chế độ ăn:</span> {{ analysis.advice.dietarySuggestions }}</p>
-    </div>
-    <div class="text-center">
-      <button (click)="exit()"
-        class="rounded-full px-8 h-10 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">Thoát</button>
-    </div>
-  </div>
-<app-subscription-modal *ngIf="showPlanModal" [plans]="plans" (close)="showPlanModal=false" (purchase)="purchasePlan($event)"></app-subscription-modal>
-<app-payment-modal *ngIf="showQrModal" [qrUrl]="qrUrl" (close)="showQrModal=false"></app-payment-modal>
+  <app-payment-modal *ngIf="showQrModal" [qrUrl]="qrUrl" (close)="showQrModal=false">
+  </app-payment-modal>
 </section>
+
+<!-- Hiệu ứng animation -->
+<style>
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(36px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.7s cubic-bezier(.38, .6, .3, 1) both;
+  }
+
+  @keyframes bounce {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  .animate-bounce {
+    animation: bounce 1.1s infinite alternate;
+  }
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.65;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 1.4s infinite;
+  }
+
+</style>

@@ -17,8 +17,8 @@ export class SubscriptionService extends BaseService {
   constructor(http: HttpClient) {
     super(http);
   }
-
-  // confirmPurchaseSubscription():Observable<IdResponse>{
-
-  // }
+  
+  confirmPurchaseSubscription(id: number):Observable<IdResponse>{
+      return super.put<IdResponse>('admin/subscriptions',id,{});
+  }
 }

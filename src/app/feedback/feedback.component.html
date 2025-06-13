@@ -1,8 +1,70 @@
-<section class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-emerald-500 via-green-400 to-sky-500 flex items-center justify-center p-4">
-  <div class="bg-white w-full max-w-md rounded-[2rem] p-8 shadow-lg space-y-6">
-    <a routerLink="/support" class="text-2xl text-emerald-800 hover:text-emerald-600"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></a>
-    <h1 class="text-xl font-semibold">Đóng góp ý kiến</h1>
-    <textarea rows="6" [(ngModel)]="note" placeholder="Nhập ý kiến bạn muốn đóng góp" class="w-full rounded-[1rem] p-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
-    <button (click)="send()" class="rounded-full w-24 h-9 bg-emerald-500 hover:bg-emerald-600 text-white font-medium">Gửi</button>
+<section
+  class="min-h-[calc(100vh-3.5rem)] bg-gradient-to-br from-emerald-500 via-green-400 to-sky-500 flex items-center justify-center p-4 select-none"
+  style="min-height: 100vh; background: linear-gradient(to right, #F99FCF 0%, #B2EDE3 45%, #C2FAFE 80%, #72BBF7 100%);"
+>
+  <div class="relative w-full max-w-lg bg-white/70 backdrop-blur-2xl rounded-[2.5rem] p-10 shadow-2xl border border-emerald-400/30
+              flex flex-col items-center space-y-7 animate-fade-in-up">
+    <!-- Icon Back -->
+    <a routerLink="/" class="absolute top-6 left-6 text-emerald-800 hover:text-emerald-600">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke-width="1.7" stroke="currentColor" class="w-7 h-7">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+      </svg>
+    </a>
+    <!-- Icon Feedback nổi bật -->
+    <div class="w-16 h-16 bg-gradient-to-tr from-emerald-400 to-sky-400 rounded-full flex items-center justify-center shadow-lg mb-2 animate-bounce-slow">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48"
+        stroke="currentColor" stroke-width="2" class="w-10 h-10 text-white drop-shadow-lg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M24 4c-8.837 0-16 5.373-16 12v8c0 3.312 2.688 6 6 6h2v6l7-6h1c8.837 0 16-5.373 16-12s-7.163-12-16-12z"/>
+      </svg>
+    </div>
+    <h1 class="text-2xl md:text-3xl font-extrabold text-emerald-800 tracking-tight mb-2 drop-shadow">Đóng góp ý kiến</h1>
+    <p class="text-center text-gray-700 font-medium mb-1">Mọi góp ý của bạn đều giúp chúng tôi cải thiện dịch vụ tốt hơn 💚</p>
+    <textarea rows="6"
+      [(ngModel)]="note"
+      placeholder="Nhập ý kiến bạn muốn đóng góp..."
+      class="w-full rounded-[1.5rem] p-5 bg-gray-100/80 border-2 border-transparent focus:border-emerald-500
+             focus:bg-white focus:ring-2 focus:ring-emerald-400/30 shadow-inner text-lg transition resize-none"></textarea>
+    <button (click)="send()"
+      class="w-full md:w-40 h-12 mt-2 rounded-full bg-gradient-to-r from-emerald-400 via-green-400 to-sky-500
+             hover:scale-105 hover:shadow-lg text-white text-lg font-bold shadow transition-all duration-200
+             tracking-wide animate-glow-btn">
+      🚀 Gửi ngay
+    </button>
   </div>
+
+  <!-- DIALOG gửi thành công -->
+  <div *ngIf="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div class="bg-white/95 rounded-2xl p-8 max-w-xs w-full flex flex-col items-center shadow-2xl text-center animate-fade-in-up border border-emerald-100">
+      <svg class="w-14 h-14 text-emerald-500 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+      </svg>
+      <div class="text-lg font-semibold text-emerald-700 mb-2">Gửi góp ý thành công!</div>
+      <p class="text-gray-600 mb-3">Cảm ơn bạn đã gửi góp ý. Chúng tôi sẽ tiếp thu để cải thiện dịch vụ!</p>
+      <button (click)="showSuccessDialog=false"
+        class="mt-2 px-6 h-10 rounded-full bg-emerald-500 text-white font-semibold hover:bg-emerald-600 shadow">
+        Đóng
+      </button>
+    </div>
+  </div>
+
+  <!-- Hiệu ứng animation nhỏ -->
+  <style>
+    @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(36px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .animate-fade-in-up { animation: fade-in-up 0.7s cubic-bezier(.38,.6,.3,1) both;}
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-10px);}
+    }
+    .animate-bounce-slow { animation: bounce-slow 1.8s infinite;}
+    @keyframes glow-btn {
+      0% { box-shadow: 0 0 24px 0 #34d39933, 0 0 40px 0 #38bdf833; }
+      100% { box-shadow: 0 0 40px 8px #22d3ee99, 0 0 70px 12px #0ea5e999;}
+    }
+    .animate-glow-btn { animation: glow-btn 2s infinite alternate;}
+  </style>
 </section>
