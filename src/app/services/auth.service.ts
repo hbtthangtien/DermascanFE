@@ -58,13 +58,13 @@ export class AuthService {
     const token = localStorage.getItem('authToken');
     if (token) {
       const decoded = jwtDecode<UserClaim>(token);
-      decoded.image = "assets/images/ImageUser.jpg"
+      decoded.Image = "assets/images/ImageUser.jpg"
       //console.log(decoded);
       return decoded;
     }
     return null;
   }
-  private restoreUser() {
+  restoreUser() {
     const storedUser = localStorage.getItem('authToken');
     if (storedUser) {
       var decoded = this.getUser();
@@ -76,11 +76,12 @@ export class AuthService {
 
   refreshToken(): Observable<BaseResponse<TokenResponse>> {
     const token = this.getToken();
-    return this.http.post<BaseResponse<TokenResponse>>(`${this.baseUrl}/auth/refresh-token`,{refreshToken: token?.refreshToken});
+    return this.http.post<BaseResponse<TokenResponse>>(`${this.baseUrl}/auth/refresh-token`, { refreshToken: token?.refreshToken });
   }
-  getToken(){
+  getToken() {
     const tokenJson = localStorage.getItem('authToken');
     const token = tokenJson ? JSON.parse(tokenJson) as TokenResponse : null;
     return token;
   }
+
 }

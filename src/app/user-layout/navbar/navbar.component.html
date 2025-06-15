@@ -25,7 +25,7 @@
     </div> -->
     <ng-container *ngIf="user$ | async as UserClaim; else guest">
       <div class="hidden md:flex items-center gap-2 cursor-pointer" (click)="dropdownOpen=!dropdownOpen">
-        <img [src]="(user$ | async)?.image || 'assets/default-avatar.png'" class="w-8 h-8 rounded-full object-cover" />
+        <img [src]="(user$ | async)?.Image || 'assets/images/ImageUser.jpg'" class="w-8 h-8 rounded-full object-cover" />
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </ng-container>

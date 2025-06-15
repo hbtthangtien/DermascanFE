@@ -1,9 +1,11 @@
 export interface UserClaim {
     planId: number;
-    userId: number;
+    UserId: number;
     role: string;
     Fullname: string;
     emailAddress: string;
     nameidentifier: number;
-    image: string;
+    Image: string;
+    Phone: string;
+    [key: string]: any;
 }

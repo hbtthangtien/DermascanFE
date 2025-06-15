@@ -3,4 +3,5 @@ export interface Profile {
     Phone: string;
     Email: string;
     HashPassword: string;
+    imageUrl: string;
 }

@@ -26,10 +26,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             });
             return next(newAuthReq);
           }),
-          catchError(refreshError =>{
-            authService.logout();
-            router.navigate(['/login']);
-            return throwError(() => refreshError);
+          catchError(refreshError => {
+            if (refreshError.status === 401 && refreshError.error?.message.toLowerCase().includes('token')) {
+              authService.logout();
+              router.navigate(['/login']);
+              
+            }
+            return throwError(() => refreshError);            
           })
         )
       }
