@@ -89,7 +89,7 @@
     <div *ngIf="step === 3" class="flex flex-col items-center gap-4">
       <video #video autoplay playsinline class="rounded-lg shadow max-w-full"></video>
       <canvas #canvas hidden></canvas>
-      <button (click)="capturePhoto()"
+      <button [disabled]="!canCapture" (click)="capturePhoto()"
         class="rounded-full px-8 h-10 bg-gradient-to-r from-emerald-400 to-blue-400 text-white font-medium hover:scale-105 shadow transition">Chụp
         ảnh</button>
     </div>
@@ -132,7 +132,7 @@
           </div>
           <div class="grid grid-cols-2 gap-2 text-sm">
             <div *ngFor="let k of (analysis.overallAnalysis.score | keyvalue)">
-              <span class="text-gray-600">{{ k.key }}</span>: <span
+              <span class="text-gray-600">{{ scoreLabels[k.key] }}</span>: <span
                 class="font-bold text-emerald-700">{{ k.value }}</span>
             </div>
           </div>

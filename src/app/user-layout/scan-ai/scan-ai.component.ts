@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ScanAnalysisService } from '../../services/scan-analysis.service';
 import { NotificateService } from '../../services/notificate.service';
@@ -18,26 +18,37 @@ import { RequestVietQr } from '../../models/VietQr/request-viet-qr';
   templateUrl: './scan-ai.component.html',
   styleUrl: './scan-ai.component.css'
 })
-export class ScanAIComponent {
+export class ScanAIComponent implements OnDestroy {
+
   private scanAnalysis = inject(ScanAnalysisService);
   private notificateService = inject(NotificateService);
   private planSvc = inject(PlanService);
   private paySvc = inject(PaymentService);
+  private zone = inject(NgZone);
   /**
   * 1 = guide, 2 = source choose, 3 = capture, 4 = loading, 5 = result, 6 = advice
   */
   step = 1;
   @ViewChild('cameraInput') cameraInput!: ElementRef<HTMLInputElement>;
   @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('video') videoRef?: ElementRef<HTMLVideoElement>;
+  @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvasRef?: ElementRef<HTMLCanvasElement>;
   selectedImageUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null | undefined;
   analysis?: ResponseAnalysis['skinAnalysis'];
   boundingBoxes: ResponseAnalysis['inferenceResult']['predictions'] = [];
   videoStream?: MediaStream;
-  
-  
+  scoreLabels: { [key: string]: string } = {
+    overall: 'Tổng thể',
+    acne: 'Mụn',
+    moisture: 'Độ ẩm',
+    pigmentation: 'Sắc tố',
+    wrinkle: 'Nếp nhăn',
+    pore: 'Lỗ chân lông',
+    sensitivity: 'Độ nhạy cảm',
+    aging: 'Lão hóa'
+  };
+
   showPlanModal = false;
   plans: Plan[] = [];
   qrUrl: string | null = null;
@@ -46,6 +57,7 @@ export class ScanAIComponent {
   resultImage = 'assets/scan-demo-result.jpg';
   chartImage = 'assets/chart-placeholder.png';
   adviceText = `• Rửa mặt ngày 2 lần bằng sữa rửa mặt dịu nhẹ\n• Hạn chế chạm tay lên mặt\n• Sử dụng kem chống nắng SPF ≥ 30\n• Thêm vitamin A, E và kẽm trong chế độ ăn`;
+  canCapture = false;
   onFileSelected(evt: Event) {
     const input = evt.target as HTMLInputElement;
     if (!input.files?.length) return;
@@ -76,7 +88,9 @@ export class ScanAIComponent {
   back() { this.step = Math.max(1, this.step - 1); }
   goCamera() {
     this.step = 3;
-    this.cameraInput.nativeElement.click(); // mở camera
+    setTimeout(() => this.openCamera(), 0); // Đợi 1 tick render xong
+
+
   }
   //=========================================
   goUpload() {
@@ -95,7 +109,7 @@ export class ScanAIComponent {
     console.log(this.selectedFile);
     this.scanAnalysis.scanImage(formData).subscribe({
       next: (resp) => {
-
+        console.log('api success', resp);
         this.analysis = resp.data.skinAnalysis;
         this.boundingBoxes = resp.data.inferenceResult.predictions;
         this.step = 5;
@@ -103,50 +117,57 @@ export class ScanAIComponent {
       error: (err) => {
         this.notificateService.error("Hệ thống đang bảo trì, vui lòng hãy thử lại");
         this.step = 2;
+        console.log('loi');
       }
     });
   }
-  // =====================================
-  async openCamera(): Promise<void> {
-    this.step = 3;
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: 640 }, height: { ideal: 480 } }
-      });
-      this.videoStream = stream;
-      if (this.videoRef?.nativeElement) {
-        this.videoRef.nativeElement.srcObject = stream;
-        await this.videoRef.nativeElement.play();
-      }
-    } catch (err) {
-      console.error(err);
-      this.notificateService.error('Không thể truy cập camera.');
-      this.step = 2;
-    }
+  openCamera(): void {
+    this.stopCamera();
+    navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 } } })
+      .then(stream => {
+        this.videoStream = stream;
+        const videoElem = this.videoRef.nativeElement;
+        videoElem.srcObject = stream;
+
+        /* CHỈ enable nút sau khi khung hình đầu đã render */
+        videoElem.onplaying = () => { this.canCapture = true; };
+
+        videoElem.play().catch(() => {          // play() có thể trả về promise
+          this.notificateService.error('Không phát được webcam');
+        });
+      })
+      .catch(() => this.notificateService.error('Không truy cập được webcam'));
   }
-  // ======================================================
-  stopCamera() {
-    this.videoStream?.getTracks().forEach(t => t.stop());
-    this.videoStream = undefined;
-  }
-  // =========================================================
+
+  /* ------------- chụp ảnh ------------- */
   capturePhoto() {
-    if (!this.videoRef?.nativeElement || !this.canvasRef?.nativeElement) return;
-    const video = this.videoRef.nativeElement;
-    const canvas = this.canvasRef.nativeElement;
+    const video = this.videoRef?.nativeElement;
+    const canvas = this.canvasRef?.nativeElement;
+    if (!video || !canvas || !this.canCapture) return;
+
+    /* Nếu kích thước vẫn =0 ⇒ chờ 1 frame rồi thử lại */
+    if (!video.videoWidth || !video.videoHeight) {
+      requestAnimationFrame(() => this.capturePhoto());
+      return;
+    }
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.getContext('2d')!.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    /* TẠO data URL ngay để hiển thị loading */
+    this.selectedImageUrl = canvas.toDataURL('image/jpeg');
+    this.step = 4;                   // CHUYỂN UI TRƯỚC, tránh flash đen
+
     canvas.toBlob(blob => {
       if (!blob) return;
       this.selectedFile = new File([blob], `capture_${Date.now()}.jpg`, { type: 'image/jpeg' });
-      this.selectedImageUrl = canvas.toDataURL('image/jpeg');
       this.stopCamera();
-      this.processImage();
+      this.zone.run(() => this.processImage());
     }, 'image/jpeg', 0.92);
   }
+
+
   showAdvice() {
     this.step = 6;
   }
@@ -172,9 +193,19 @@ export class ScanAIComponent {
     this.notificateService.success(`Đang khởi tạo thanh toán cho ${plan.name}...`);
     this.showQrModal = true;
     this.qrUrl = null;
-    const body : RequestVietQr =  {
+    const body: RequestVietQr = {
       planId: plan.id
     }
     this.paySvc.purchasePlan(body).subscribe(url => this.qrUrl = url.data.data.qrDataURL);
+  }
+
+  ngOnDestroy() {
+    this.stopCamera();
+  }
+
+  stopCamera() {
+    this.videoStream?.getTracks().forEach(t => t.stop());
+    this.videoStream = undefined;
+    this.canCapture = false;
   }
 }

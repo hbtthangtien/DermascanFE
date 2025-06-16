@@ -14,27 +14,27 @@ import { trigger, transition, animate, style } from '@angular/animations';
   templateUrl: './admin-orders.component.html',
   styleUrl: './admin-orders.component.css',
   animations: [
-  trigger('badgePulse', [
-    transition('* => Active', [
-      style({ boxShadow: '0 0 0 0 #10b98133' }),
-      animate('0.1s cubic-bezier(.36,2,.64,.7)', style({ boxShadow: '0 0 0 8px #10b98122' }))
-    ]),
-    transition('* => Pending', [
-      style({ boxShadow: '0 0 0 0 #fbbf2444' }),
-      animate('0.1s cubic-bezier(.36,2,.64,.7)', style({ boxShadow: '0 0 0 8px #fbbf2444' }))
+    trigger('badgePulse', [
+      transition('* => Active', [
+        style({ boxShadow: '0 0 0 0 #10b98133' }),
+        animate('0.1s cubic-bezier(.36,2,.64,.7)', style({ boxShadow: '0 0 0 8px #10b98122' }))
+      ]),
+      transition('* => Pending', [
+        style({ boxShadow: '0 0 0 0 #fbbf2444' }),
+        animate('0.1s cubic-bezier(.36,2,.64,.7)', style({ boxShadow: '0 0 0 8px #fbbf2444' }))
+      ])
     ])
-  ])
-],
+  ],
 })
-export class AdminOrdersComponent implements OnInit{
+export class AdminOrdersComponent implements OnInit {
   orders: PurchaseOrderView[] = [];
   keyword = '';
   statusFilter: PurchaseOrderView['status'] | '' = '';
   statuses: PurchaseOrderView['status'][] = ['Active', 'Pending', 'Expired', 'Canceled', 'Trial', 'Failed'];
 
   constructor(private orderSvc: SubscriptionService, public dialogRef: MatDialog) { }
-  ngOnInit() { 
-    this.orderSvc.getOrders().subscribe(o => (this.orders = o.data)); 
+  ngOnInit() {
+    this.orderSvc.getOrders().subscribe(o => (this.orders = o.data));
     console.log('Order API:', this.orders);
   }
 
@@ -61,12 +61,17 @@ export class AdminOrdersComponent implements OnInit{
   };
 
   markPaid(o: PurchaseOrderView) {
-    this.dialogRef.open(ConfirmPurchaseComponent, {
+    const dialogRef = this.dialogRef.open(ConfirmPurchaseComponent, {
       width: '400px',
       height: '200px',
       data: {
         id: o.id
       }
     });
-  }  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        location.reload();
+      }
+    })
+  }
 }

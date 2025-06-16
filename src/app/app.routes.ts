@@ -11,11 +11,14 @@ import { AppComponent } from './app.component';
 import { AppointmenComponent } from './user-layout/appointmen/appointmen.component';
 import { ProfileComponent } from './user-layout/profile/profile.component';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
+import { roleGuard } from './role.guard';
 
 export const routes: Routes = [
     {
         path: 'admin',
         component: AdminLayoutComponent,
+        canActivate:[roleGuard],
+        data:{role:'ADMIN'},
         children: [
             { path: '', redirectTo: 'orders', pathMatch: 'full' },
             { path: 'orders', component: AdminOrdersComponent }

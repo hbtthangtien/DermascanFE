@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-admin-navbar',
   imports: [RouterModule, CommonModule, FormsModule],
@@ -13,6 +14,7 @@ import { ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 
 export class AdminNavbarComponent implements AfterViewInit {
+  private authService = inject(AuthService);
   navOpen = false;
   showDropdown = false;
   showNotif = false;
@@ -69,6 +71,7 @@ export class AdminNavbarComponent implements AfterViewInit {
   // Dropdown account
   logout() {
     // ... Xử lý logout
+    this.authService.logout();
     this.showDropdown = false;
   }
 }

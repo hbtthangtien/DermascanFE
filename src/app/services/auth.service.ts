@@ -21,16 +21,20 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient) {
     this.restoreUser();
   }
-
   login(body: LoginRequest): Observable<BaseResponse<TokenResponse>> {
     return this.baseService.post<BaseResponse<TokenResponse>>(this.loginPath, body)
       .pipe(
         tap(resp => {
           if (resp.success) {
             localStorage.setItem('authToken', JSON.stringify(resp.data));
-            this.router.navigate(['/home'])
             const user = this.getUser();
             this.userSubject.next(user);
+            const role = this.getRole();
+            if (role === 'ADMIN') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/home']);
+            }
           }
         })
       );
@@ -73,7 +77,6 @@ export class AuthService {
       this.userSubject.next(null);
     }
   }
-
   refreshToken(): Observable<BaseResponse<TokenResponse>> {
     const token = this.getToken();
     return this.http.post<BaseResponse<TokenResponse>>(`${this.baseUrl}/auth/refresh-token`, { refreshToken: token?.refreshToken });
@@ -83,5 +86,14 @@ export class AuthService {
     const token = tokenJson ? JSON.parse(tokenJson) as TokenResponse : null;
     return token;
   }
+  getRole() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decoded = jwtDecode<UserClaim>(token);
 
+      //console.log(decoded);
+      return decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    }
+    return null;
+  }
 }
