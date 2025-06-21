@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/75c47f08-af2b-4e55-a7c8-5efe1d05ccd9/resourceGroups/DermascanSystem/providers/Microsoft.Web/sites/Dermascan",
+    "appService.deploySubpath": "dist"
+}

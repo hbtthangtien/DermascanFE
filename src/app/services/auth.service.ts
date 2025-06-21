@@ -53,7 +53,9 @@ export class AuthService {
         this.restoreUser();
       },
       error: (err) => {
-
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/login']);
+        this.restoreUser();
       }
     });
 

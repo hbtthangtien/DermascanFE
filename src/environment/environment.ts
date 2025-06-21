@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:5000/api' // đổi theo API local
+  apiUrl: 'https://dermascansystem.azurewebsites.net/api' // đổi theo API local
 };
