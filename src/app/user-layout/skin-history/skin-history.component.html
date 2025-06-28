@@ -1,0 +1,129 @@
+<div
+  class="min-h-screen bg-gradient-to-tr from-[#F8FBFF] via-[#F7F5FD] to-[#FFF4F9] py-10 px-2 md:px-16 flex flex-col gap-10">
+
+  <!-- HEADER -->
+  <header class="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-4">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-white shadow flex items-center justify-center">
+        <svg class="w-7 h-7 text-[#D13D76]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" y1="3" x2="12" y2="15" />
+        </svg>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-[#121117] tracking-tight">Chào mừng trở lại!</div>
+        <div class="text-sm text-[#A0A5B9]">Dashboard phân tích chỉ số da</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 bg-white rounded-xl px-6 py-2 border border-[#D8F8F2] shadow">
+      <input type="date" class="outline-none bg-transparent px-2 py-1 text-[#121117]"
+        [formControl]="range.controls.from" name="from">
+      <span class="mx-1 text-[#D13D76] text-lg">–</span>
+      <input type="date" class="outline-none bg-transparent px-2 py-1 text-[#121117]" [formControl]="range.controls.to"
+        name="to">
+      <button class="ml-2 p-2 rounded-xl hover:bg-[#D8F8F2] transition" (click)="fetchAndRender()" title="Lọc dữ liệu">
+        view
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD -->
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- KHỐI CHỈ SỐ CHÍNH -->
+    <section class="flex-1 bg-white rounded-3xl shadow-2xl p-8 border border-[#E9F3F8] relative overflow-hidden">
+      <div class="absolute top-1 left-7 bg-[#F9E5EF] px-4 py-1 rounded-full text-xs font-bold text-[#D13D76] shadow-sm">
+        Lịch sử chỉ số</div>
+      <div class="mb-5 text-xl font-semibold text-[#121117]">Biểu đồ thay đổi chỉ số qua từng lần</div>
+      <canvas baseChart [type]="$any(lineChartType)" [data]="lineChartData" [options]="lineChartOptions"
+        style="display:block;max-height:280px"></canvas>
+
+      <div class="mt-8 overflow-x-auto">
+        <table class="min-w-full bg-white rounded-2xl shadow-md border border-[#E9F3F8]">
+          <thead>
+            <tr>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left rounded-tl-2xl">
+                Ngày</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Tổng thể</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Mụn</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Ẩm</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Lão hóa</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Sắc tố</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Lỗ chân lông</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left">
+                Nếp nhăn</th>
+              <th
+                class="p-3 text-xs font-bold text-[#D13D76] uppercase bg-[#F9E5EF] border-b border-[#E9F3F8] text-left rounded-tr-2xl">
+                Nhạy cảm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of history" class="hover:bg-[#F9E5EF]/40 transition">
+              <td class="p-3 font-medium text-[#121117] whitespace-nowrap">
+                {{ formatDate(row.capturedAt) }}
+              </td>
+              <td class="p-3 text-[#D13D76] font-semibold">{{ row.overallScore }}</td>
+              <td class="p-3">{{ row.acneScore }}</td>
+              <td class="p-3">{{ row.moistureScore }}</td>
+              <td class="p-3">{{ row.agingScore }}</td>
+              <td class="p-3">{{ row.pigmentationScore }}</td>
+              <td class="p-3">{{ row.poreScore }}</td>
+              <td class="p-3">{{ row.wrinkleScore }}</td>
+              <td class="p-3">{{ row.sensitivityScore }}</td>
+            </tr>
+            <tr *ngIf="!history || history.length === 0">
+              <td colspan="9" class="p-4 text-center text-[#B2B6BE]">Không có dữ liệu</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+    </section>
+    <!-- CỘT THÔNG TIN PHỤ -->
+    <aside class="flex flex-col gap-8 md:w-[380px] w-full">
+      <!-- CARD 2 -->
+      <div class="relative bg-white rounded-2xl shadow-xl border border-[#E9F3F8] p-6">
+        <div
+          class="absolute -top-4 left-6 bg-gradient-to-r from-[#B2EDE3] to-[#FE9FC3] px-4 py-1 rounded-full text-xs font-bold text-[#D13D76] shadow">
+          Đánh giá toàn diện</div>
+        <canvas baseChart [type]="$any(radarChartType)" [data]="radarChartData" [options]="radarChartOptions"
+          style="display:block;max-height:170px"></canvas>
+      </div>
+      <!-- CARD 3 -->
+      <div class="relative bg-white rounded-2xl shadow-xl border border-[#E9F3F8] p-6">
+        <div
+          class="absolute -top-4 left-6 bg-gradient-to-r from-[#FAD3E7] to-[#B2EDE3] px-4 py-1 rounded-full text-xs font-bold text-[#D13D76] shadow">
+          So sánh vùng da</div>
+        <canvas baseChart [type]="$any(barChartType)" [data]="barChartData" [options]="barChartOptions"
+          style="display:block;max-height:170px"></canvas>
+        <select [formControl]="periodControl" class="border rounded px-2 py-1">
+          <option value="week">Theo tuần</option>
+          <option value="month">Theo tháng</option>
+        </select>
+      </div>
+      <!-- CARD 4 -->
+      <div class="relative bg-white rounded-2xl shadow-xl border border-[#E9F3F8] p-6">
+        <div
+          class="absolute -top-4 left-6 bg-gradient-to-r from-[#D8F8F2] to-[#D13D76] px-4 py-1 rounded-full text-xs font-bold text-[#D13D76] shadow">
+          Tỷ lệ trạng thái da</div>
+        <canvas baseChart [type]="$any(pieChartType)" [data]="pieChartData" [options]="pieChartOptions"
+          style="display:block;max-height:170px"></canvas>
+      </div>
+    </aside>
+  </div>
+</div>

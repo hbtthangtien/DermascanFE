@@ -12,13 +12,14 @@ import { AppointmenComponent } from './user-layout/appointmen/appointmen.compone
 import { ProfileComponent } from './user-layout/profile/profile.component';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { roleGuard } from './role.guard';
+import { SkinHistoryComponent } from './user-layout/skin-history/skin-history.component';
 
 export const routes: Routes = [
     {
         path: 'admin',
         component: AdminLayoutComponent,
-        canActivate:[roleGuard],
-        data:{role:'ADMIN'},
+        canActivate: [roleGuard],
+        data: { role: 'ADMIN' },
         children: [
             { path: '', redirectTo: 'orders', pathMatch: 'full' },
             { path: 'orders', component: AdminOrdersComponent }
@@ -36,6 +37,7 @@ export const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent },
             { path: 'appointment', component: AppointmenComponent },
             { path: 'profile', component: ProfileComponent },
+            { path: 'history', component: SkinHistoryComponent },
             { path: '', redirectTo: 'home', pathMatch: 'full' },
         ]
     },
