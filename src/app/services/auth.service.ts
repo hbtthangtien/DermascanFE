@@ -98,4 +98,14 @@ export class AuthService {
     }
     return null;
   }
+  getPlanId() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decoded = jwtDecode<UserClaim>(token);
+
+      //console.log(decoded);
+      return decoded.PlanId;
+    }
+    return 1;
+  }
 }

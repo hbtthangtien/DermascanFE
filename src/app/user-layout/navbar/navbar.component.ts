@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, RouterModule, ProfileMenuComponent],
-  standalone:true,
+  standalone: true,
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
@@ -18,8 +18,15 @@ export class NavbarComponent {
   navOpen = false;
   dropdownOpen = false;
   user$: Observable<UserClaim | null>;
-  constructor(private authService: AuthService){
-      this.user$ = this.authService.currentUser$;
+  planId: number = 0;
+  constructor(private authService: AuthService) {
+    this.user$ = this.authService.currentUser$;
+    this.user$.subscribe({
+      next:(u) =>{
+        this.planId = u!.PlanId;
+        console.log(this.planId);
+      }
+    })
   }
   onRegister() {
     this.router.navigate(['/register']);

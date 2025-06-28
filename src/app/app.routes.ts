@@ -13,6 +13,7 @@ import { ProfileComponent } from './user-layout/profile/profile.component';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { roleGuard } from './role.guard';
 import { SkinHistoryComponent } from './user-layout/skin-history/skin-history.component';
+import { historyGuard } from './history.guard';
 
 export const routes: Routes = [
     {
@@ -37,7 +38,7 @@ export const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent },
             { path: 'appointment', component: AppointmenComponent },
             { path: 'profile', component: ProfileComponent },
-            { path: 'history', component: SkinHistoryComponent },
+            { path: 'history', component: SkinHistoryComponent, canActivate:[historyGuard],data:{planId:3} },
             { path: '', redirectTo: 'home', pathMatch: 'full' },
         ]
     },

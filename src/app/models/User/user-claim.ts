@@ -1,5 +1,5 @@
 export interface UserClaim {
-    planId: number;
+    PlanId: number;
     UserId: number;
     role: string;
     Fullname: string;

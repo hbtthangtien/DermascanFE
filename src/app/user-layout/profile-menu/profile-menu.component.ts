@@ -11,11 +11,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-menu.component.css']
 })
 export class ProfileMenuComponent implements OnInit {
-  
+  history() {
+    this.router.navigate(['/history']);
+    this.closed.emit();
+  }
+
 
   @Output() closed = new EventEmitter<void>();
   @Input() fullname: string | undefined;
-
+  @Input() planId: number = 0;
   section: 'root' | 'settings' | 'language' = 'root';
 
   searchLang = '';

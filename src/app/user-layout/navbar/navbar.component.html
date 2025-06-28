@@ -8,10 +8,13 @@
 
     <!-- Desktop links -->
     <ul class="hidden md:flex gap-6 font-medium">
-      <li><a routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Trang chủ</a></li>
+      <li><a routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="text-yellow-300"
+          class="hover:text-yellow-300">Trang chủ</a></li>
       <li><a routerLink="/scan" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Quét AI</a></li>
-      <li *ngIf="user$ | async as UserClaim"><a routerLink="/appointment" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
-      <li><a routerLink="/support" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Liên hệ hỗ trợ</a></li>
+      <li *ngIf="user$ | async as UserClaim"><a routerLink="/appointment" routerLinkActive="text-yellow-300"
+          class="hover:text-yellow-300">Tư vấn bác sĩ <span class="ml-0.5">👑</span></a></li>
+      <li><a routerLink="/support" routerLinkActive="text-yellow-300" class="hover:text-yellow-300">Liên hệ hỗ trợ</a>
+      </li>
     </ul>
 
     <!-- Auth buttons -->
@@ -25,16 +28,23 @@
     </div> -->
     <ng-container *ngIf="user$ | async as UserClaim; else guest">
       <div class="hidden md:flex items-center gap-2 cursor-pointer" (click)="dropdownOpen=!dropdownOpen">
-        <img [src]="(user$ | async)?.Image || 'assets/images/ImageUser.jpg'" class="w-8 h-8 rounded-full object-cover" />
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        <img [src]="(user$ | async)?.Image || 'assets/images/ImageUser.jpg'"
+          class="w-8 h-8 rounded-full object-cover" />
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="6 9 12 15 18 9" /></svg>
       </div>
     </ng-container>
     <ng-template #guest>
-      <div class="hidden md:flex gap-2"><button (click)="onLogin()" class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng nhập</button><button (click)="onRegister()" class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng ký</button></div>
+      <div class="hidden md:flex gap-2"><button (click)="onLogin()"
+          class="border border-white/70 rounded px-3 py-1 text-sm hover:bg-white hover:text-emerald-700 transition">Đăng
+          nhập</button><button (click)="onRegister()"
+          class="bg-white text-emerald-700 rounded px-3 py-1 text-sm hover:bg-amber-300 hover:text-emerald-900 transition">Đăng
+          ký</button></div>
     </ng-template>
 
     <!-- Profile dropdown component mounted -->
-    <app-profile-menu *ngIf="dropdownOpen" (closed)="dropdownOpen=false" [fullname]="(user$ | async)?.Fullname"></app-profile-menu>
+    <app-profile-menu *ngIf="dropdownOpen" (closed)="dropdownOpen=false" [fullname]="(user$ | async)?.Fullname" [planId]="planId">
+    </app-profile-menu>
     <!-- Mobile hamburger -->
     <button class="md:hidden" (click)="navOpen = !navOpen">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -49,13 +59,14 @@
   <ul *ngIf="navOpen" class="md:hidden bg-emerald-700/95 backdrop-blur px-6 pb-4 space-y-3">
     <li><a routerLink="/" (click)="navOpen=false" class="block py-2 border-b border-white/10">Trang chủ</a></li>
     <li><a routerLink="/scan" (click)="navOpen=false" class="block py-2 border-b border-white/10">Quét AI</a></li>
-    <li><a routerLink="/appointment" (click)="navOpen=false" class="block py-2 border-b border-white/10">Tư vấn bác sĩ 👑</a>
+    <li><a routerLink="/appointment" (click)="navOpen=false" class="block py-2 border-b border-white/10">Tư vấn bác sĩ
+        👑</a>
     </li>
     <li><a routerLink="/support" (click)="navOpen=false" class="block py-2 border-b border-white/10">Liên hệ hỗ trợ</a>
-    </li >
+    </li>
     <li class="pt-3 flex gap-3">
-    <button (click)="onLogin()" class="flex-1 border border-white/70 rounded py-1 text-sm">Đăng nhập</button>
-    <button (click)="onRegister()" class="flex-1 bg-white text-emerald-700 rounded py-1 text-sm">Đăng ký</button>
+      <button (click)="onLogin()" class="flex-1 border border-white/70 rounded py-1 text-sm">Đăng nhập</button>
+      <button (click)="onRegister()" class="flex-1 bg-white text-emerald-700 rounded py-1 text-sm">Đăng ký</button>
     </li>
   </ul>
 </nav>
