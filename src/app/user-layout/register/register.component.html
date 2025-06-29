@@ -34,7 +34,7 @@
       </div>
       <div>
         <label for="fullname" class="block font-medium mb-1">Nhập Họ và Tên</label>
-        <input id="fullname" type="tel" formControlName="fullname" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        <input id="fullname" type="text" formControlName="fullname" class="w-full rounded-full h-11 px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         <p *ngIf="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched" class="text-red-600 text-sm mt-1">Tên không được bỏ trống</p>
       </div>
       <p class="text-center text-red-600 text-sm mt-1">{{errors}}</p>
