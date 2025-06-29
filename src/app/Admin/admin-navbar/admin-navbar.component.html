@@ -17,12 +17,12 @@
           </a>
         </li>
         <li>
-          <a routerLink="/admin/users" #tab2 routerLinkActive="active" class="nav-link relative px-2 py-1">
+          <a #tab2 routerLinkActive="active" class="nav-link relative px-2 py-1">
             Người dùng
           </a>
         </li>
         <li>
-          <a routerLink="/admin/report" #tab3 routerLinkActive="active" class="nav-link relative px-2 py-1">
+          <a routerLink="/admin/dashboard" #tab3 routerLinkActive="active" class="nav-link relative px-2 py-1">
             Báo cáo
           </a>
         </li>
@@ -68,8 +68,8 @@
         </button>
         <!-- Dropdown -->
         <div *ngIf="showDropdown" class="absolute right-0 mt-3 min-w-[190px] bg-white text-gray-900 rounded-xl shadow-2xl py-2 z-50 animate-fade-in-up">
-          <a routerLink="/admin/profile" class="block px-4 py-2 hover:bg-emerald-50 font-semibold">Hồ sơ cá nhân</a>
-          <a routerLink="/admin/settings" class="block px-4 py-2 hover:bg-emerald-50">Cài đặt</a>
+          <a  class="block px-4 py-2 hover:bg-emerald-50 font-semibold">Hồ sơ cá nhân</a>
+          <a  class="block px-4 py-2 hover:bg-emerald-50">Cài đặt</a>
           <button (click)="logout()" class="block w-full text-left px-4 py-2 hover:bg-red-50 text-red-500 font-semibold">Đăng xuất</button>
         </div>
       </div>
@@ -86,8 +86,8 @@
   <!-- Menu mobile -->
   <ul *ngIf="navOpen" class="md:hidden bg-[#1b2e47]/95 backdrop-blur-md px-6 pb-5 pt-1 space-y-4 border-t border-[#B2EDE3]/10 animate-fade-in-up">
     <li><a routerLink="/admin/orders" (click)="navOpen=false" class="block py-3 border-b border-white/10 font-semibold hover:text-yellow-300 transition">Đơn hàng</a></li>
-    <li><a routerLink="/admin/users" (click)="navOpen=false" class="block py-3 border-b border-white/10 font-semibold hover:text-emerald-300 transition">Người dùng</a></li>
-    <li><a routerLink="/admin/report" (click)="navOpen=false" class="block py-3 border-b border-white/10 font-semibold hover:text-sky-300 transition">Báo cáo</a></li>
+    <li><a (click)="navOpen=false" class="block py-3 border-b border-white/10 font-semibold hover:text-emerald-300 transition">Người dùng</a></li>
+    <li><a routerLink="/admin/dashboard" (click)="navOpen=false" class="block py-3 border-b border-white/10 font-semibold hover:text-sky-300 transition">Báo cáo</a></li>
   </ul>
   <style>
     .nav-link.active::after {

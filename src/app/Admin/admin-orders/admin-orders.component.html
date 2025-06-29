@@ -1,26 +1,32 @@
-<section class="p-6 max-w-7xl mx-auto space-y-8">
-  <h1 class="text-3xl font-extrabold text-emerald-700 tracking-tight flex items-center gap-3 drop-shadow mb-4">
-    <svg class="w-8 h-8 text-[#F99FCF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3v4M8 3v4"/></svg>
+<section class="py-10 px-4 md:px-12 space-y-10 mx-auto  min-h-screen bg-gradient-to-br from-[#22223b] via-[#0a9396]/70 to-[#ffffff]">
+  <h1 class="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3 drop-shadow mb-4">
+    <svg class="w-8 h-8 text-[#F99FCF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect x="3" y="7" width="18" height="13" rx="2"/>
+      <path d="M16 3v4M8 3v4"/>
+    </svg>
     Quản lý đơn hàng
   </h1>
 
-  <!-- Search & filter đẹp -->
-  <div class="flex flex-wrap gap-4 items-center glass-blur p-4 rounded-xl shadow-lg border border-[#B2EDE3]/50 bg-white/80">
+  <!-- Search & filter -->
+  <div class="flex flex-wrap gap-4 items-center glass-blur p-4 rounded-xl shadow-lg border border-[#B2EDE3]/50 bg-white/60 backdrop-blur-lg">
     <div class="relative w-72">
-      <input [(ngModel)]="keyword" placeholder="Tìm theo tên, mã đơn, code..." class="w-full h-10 rounded-xl pl-11 pr-4 bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm shadow transition" />
-      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input [(ngModel)]="keyword" placeholder="Tìm theo tên, mã đơn, code..." 
+             class="w-full h-10 rounded-xl pl-11 pr-4 bg-[#e0f2f1]/70 border border-[#0a9396]/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm shadow transition" />
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
     </div>
-    <select [(ngModel)]="statusFilter" class="h-10 rounded-xl px-4 bg-gray-100/70 text-sm font-medium shadow focus:ring-2 focus:ring-emerald-300 border border-[#B2EDE3]/30 transition">
+    <select [(ngModel)]="statusFilter" class="h-10 rounded-xl px-4 bg-[#e0f2f1]/70 border border-[#0a9396]/10 text-sm font-medium shadow focus:ring-2 focus:ring-emerald-300 transition">
       <option value="">Tất cả trạng thái</option>
       <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
     </select>
-    <span class="hidden md:block text-xs text-gray-400 ml-auto">Tổng đơn: <b>{{ filtered().length }}</b></span>
+    <span class="hidden md:block text-xs text-gray-200 ml-auto">Tổng đơn: <b>{{ filtered().length }}</b></span>
   </div>
 
-  <!-- Table -->
-  <div class="overflow-x-auto bg-white/80 glass-blur shadow-2xl rounded-3xl border border-[#B2EDE3]/40">
+  <!-- Table + Pagination -->
+  <div class="overflow-x-auto bg-white/80 glass-blur shadow-2xl rounded-3xl border border-[#B2EDE3]/40 mt-2">
     <table class="min-w-full text-[15px] font-[500]">
-      <thead class="bg-[#B2EDE3]/40 text-xs uppercase text-emerald-700 select-none border-b border-[#B2EDE3]/50">
+      <thead class="bg-[#0a9396]/20 text-xs uppercase text-[#22223b] select-none border-b border-[#B2EDE3]/50">
         <tr>
           <th class="px-3 py-3 text-left">Mã đơn</th>
           <th class="px-3 py-3 text-left">Họ tên</th>
@@ -32,10 +38,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of filtered(); let i=index" 
-            [ngClass]="(i%2 ? 'bg-[#B2EDE3]/10' : 'bg-white/60') + ' transition hover:shadow-xl hover:scale-[1.015] hover:bg-emerald-50/70 duration-150'">
-          <td class="px-3 py-2 font-semibold text-emerald-700">{{ order.id }}</td>
-          <td class="px-3 py-2 text-gray-800">{{ order.fullName }}</td>
+        <tr *ngFor="let order of pagedOrders(); let i=index" 
+            [ngClass]="(i%2 ? 'bg-[#0a9396]/10' : 'bg-white/60') + ' transition hover:shadow-xl hover:scale-[1.015] hover:bg-emerald-50/70 duration-150'">
+          <td class="px-3 py-2 font-semibold text-[#0a9396]">{{ order.id }}</td>
+          <td class="px-3 py-2 text-[#22223b]">{{ order.fullName }}</td>
           <td class="px-3 py-2 text-center text-pink-500 font-semibold">{{ order.planName }}</td>
           <td class="px-3 py-2 max-w-xs truncate" [title]="order.planDescription">{{ order.planDescription }}</td>
           <td class="px-3 py-2 text-center">
@@ -62,8 +68,27 @@
         </tr>
       </tbody>
     </table>
+    <!-- Pagination -->
+    <div class="flex justify-center items-center gap-2 py-5">
+      <button class="w-9 h-9 rounded-lg bg-[#0a9396]/30 text-[#121117] font-bold shadow hover:bg-[#0a9396]/60 transition"
+              [disabled]="page===1"
+              (click)="page=page-1">
+        &lt;
+      </button>
+      <ng-container *ngFor="let p of pagesArray()">
+        <button class="w-9 h-9 rounded-lg"
+                [ngClass]="p===page ? 'bg-[#0a9396] text-white font-extrabold shadow-xl scale-110' : 'bg-[#B2EDE3]/30 text-[#121117] font-bold hover:bg-[#B2EDE3]/70'"
+                (click)="gotoPage(p)">
+          {{ p }}
+        </button>
+      </ng-container>
+      <button class="w-9 h-9 rounded-lg bg-[#0a9396]/30 text-[#121117] font-bold shadow hover:bg-[#0a9396]/60 transition"
+              [disabled]="page===totalPages()"
+              (click)="page=page+1">
+        &gt;
+      </button>
+    </div>
   </div>
-
   <style>
     .glass-blur {
       backdrop-filter: blur(10px);

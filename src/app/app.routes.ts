@@ -14,6 +14,7 @@ import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { roleGuard } from './role.guard';
 import { SkinHistoryComponent } from './user-layout/skin-history/skin-history.component';
 import { historyGuard } from './history.guard';
+import { DashboardComponent } from './Admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -22,8 +23,9 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { role: 'ADMIN' },
         children: [
-            { path: '', redirectTo: 'orders', pathMatch: 'full' },
-            { path: 'orders', component: AdminOrdersComponent }
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+            { path: 'orders', component: AdminOrdersComponent },
+            { path: 'dashboard',component:DashboardComponent}
         ]
     },
     {

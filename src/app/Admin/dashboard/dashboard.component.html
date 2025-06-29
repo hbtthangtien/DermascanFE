@@ -1,0 +1,81 @@
+<div class="font-sans min-h-screen bg-gradient-to-br from-[#22223b] via-[#0a9396]/70 to-[#ffffff] py-10 px-4 md:px-12 space-y-10">
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
+    <div class="flex items-center gap-3">
+      <svg class="w-11 h-11 text-[#3a86ff] drop-shadow-xl animate-spin-slow" fill="none" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke="#b2f7ef" stroke-width="3" fill="#fff"/>
+        <path d="M12 2a10 10 0 0 1 8.66 5" stroke="#3a86ff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <h1 class="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#3a86ff] via-[#90e0ef] to-[#22223b] drop-shadow-lg tracking-tight">
+        Dashboard Tổng quan người dùng
+      </h1>
+    </div>
+    <span class="text-[#0a9396] text-xs font-semibold ml-1 px-3 py-1 rounded-full bg-white/60 shadow">Cập nhật realtime</span>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div *ngFor="let s of [
+        {v: dashboard?.totalUsers, l:'Tổng User', ic:'👥', c:'from-[#3a86ff] to-[#90e0ef]'},
+        {v: dashboard?.totalUsersRegisteredPlan, l:'Đã đăng ký gói', ic:'💼', c:'from-[#b5179e] to-[#f72585]'},
+        {v: dashboard?.activeUsers, l:'Đang hoạt động', ic:'🟢', c:'from-[#43aa8b] to-[#4cc9f0]'},
+        {v: (dashboard?.totalRevenue||0)|number:'1.0-0', l:'Tổng doanh thu', ic:'💵', isMoney:true, c:'from-[#f3722c] to-[#f9c74f]'}
+      ]"
+      class="relative bg-white/80 border-2 border-[#3a86ff]/10 rounded-xl shadow-2xl px-6 py-6 flex flex-col items-center group hover:scale-[1.04] hover:shadow-2xl transition-all duration-200 backdrop-blur-[2px]">
+      <div class="absolute -top-4 left-4 text-[2.2rem] opacity-80 group-hover:scale-110 transition">{{ s.ic }}</div>
+      <div class="text-2xl md:text-3xl font-bold text-[#22223b] drop-shadow-md group-hover:text-[#3a86ff] transition-all duration-200 flex items-baseline gap-1">
+        {{ s.v }}<span *ngIf="s.isMoney" class="text-base font-semibold ml-1 text-[#f3722c]">₫</span>
+      </div>
+      <div class="stat-label mt-1 text-sm text-[#555] font-semibold tracking-wide uppercase">{{ s.l }}</div>
+      <div class="mt-4 w-4/5 h-1.5 rounded bg-gradient-to-r" [ngClass]="s.c"></div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="rounded-2xl bg-white/80 shadow-lg border-2 border-[#90e0ef]/10 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <svg class="w-5 h-5 text-[#3a86ff]" fill="none" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke="#3a86ff" stroke-width="2"/></svg>
+        <span class="font-bold text-[#3a86ff]">Tỷ lệ user theo gói</span>
+      </div>
+      <canvas baseChart [type]="pieType" [data]="pieData"
+              [options]="{responsive:true, plugins: { legend: { position: 'bottom', labels: { color: '#3a86ff', font: { size: 13, weight: 'bold' }}}}}"
+              style="max-height:260px"></canvas>
+    </div>
+    <div class="rounded-2xl bg-white/80 shadow-lg border-2 border-[#43aa8b]/10 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <svg class="w-5 h-5 text-[#43aa8b]" fill="none" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-6" stroke="#43aa8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="font-bold text-[#43aa8b]">Đăng ký & Doanh thu theo tháng</span>
+      </div>
+      <canvas baseChart [type]="monthlyType" [data]="monthlyData" [options]="monthlyOpts" style="max-height:260px"></canvas>
+    </div>
+  </div>
+
+  <!-- Revenue Table -->
+  <div class="mt-2 bg-white/80 shadow-xl rounded-2xl p-6 overflow-x-auto border-2 border-[#b5179e]/10">
+    <div class="flex items-center gap-2 mb-3">
+      <svg class="w-5 h-5 text-[#b5179e]" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#b5179e" stroke-width="2" fill="#f72585"/></svg>
+      <span class="font-bold text-[#b5179e]">Doanh thu từng gói</span>
+    </div>
+    <table class="min-w-[540px] w-full text-sm rounded-lg overflow-hidden text-center">
+      <thead>
+        <tr class="bg-gradient-to-r from-[#f9c74f]/70 to-[#90e0ef]/60 text-[#22223b] text-base font-bold">
+          <th class="py-2 px-3 rounded-tl-xl">Gói</th>
+          <th class="py-2 px-3">Lượt đăng ký</th>
+          <th class="py-2 px-3">Giá lẻ</th>
+          <th class="py-2 px-3 rounded-tr-xl">Doanh thu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of dashboard?.planRevenues"
+            class="border-t hover:bg-[#f1faee]/80 transition group">
+          <td class="py-2 px-3 font-semibold group-hover:text-[#3a86ff]">{{ p.planName }}</td>
+          <td class="py-2 px-3 font-bold text-[#22223b]">{{ p.registerCount }}</td>
+          <td class="py-2 px-3 font-bold text-[#22223b]">{{ p.price | number:'1.0-0' }}₫</td>
+          <td class="py-2 px-3 font-bold text-[#f3722c]">{{ p.revenue | number:'1.0-0' }}₫</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

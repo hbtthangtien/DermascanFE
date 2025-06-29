@@ -74,4 +74,36 @@ export class AdminOrdersComponent implements OnInit {
       }
     })
   }
+  // --- Phân trang ---
+  page = 1;
+  pageSize = 8; // Số dòng trên mỗi trang
+
+  pagedOrders() {
+    const data = this.filtered();
+    const start = (this.page - 1) * this.pageSize;
+    return data.slice(start, start + this.pageSize);
+  }
+
+  totalPages() {
+    return Math.ceil(this.filtered().length / this.pageSize) || 1;
+  }
+
+  pagesArray() {
+    const t = this.totalPages();
+    // Hiển thị tối đa 5 nút trang: ... 2 3 [4] 5 6 ...
+    const pages: number[] = [];
+    let from = Math.max(1, this.page - 2);
+    let to = Math.min(t, this.page + 2);
+    if (to - from < 4) {
+      if (from === 1) to = Math.min(t, from + 4);
+      else from = Math.max(1, to - 4);
+    }
+    for (let i = from; i <= to; i++) pages.push(i);
+    return pages;
+  }
+
+  gotoPage(p: number) {
+    this.page = p;
+  }
+
 }
