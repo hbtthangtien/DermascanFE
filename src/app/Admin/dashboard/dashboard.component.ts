@@ -57,7 +57,7 @@ export class DashboardComponent {
 
   private buildMonthly(src: Statistic['monthlyStats']) {
     this.monthlyData = {
-      labels: src.map(x => dayjs(x.month).format('MM/YY')),
+      labels: src.map(x => x.month),
       datasets: [
         { data: src.map(x => x.registerCount), label: 'Đăng ký', yAxisID: 'y' },
         { data: src.map(x => x.revenue / 1000), label: 'Doanh thu (k)', yAxisID: 'y1' }
